@@ -472,3 +472,9 @@ async def control(body: dict):
             system.emergency.spawn(sim, system.bus, start=start, goal=goal)
             system.bus.log(f"Scenario applied: Emergency Drill {start}->{goal}", "Operator", "emergency", sim.tick)
     return {"ok": True, "use_agents": system.use_agents, "paused": state["paused"], "speed": state["speed"]}
+
+
+if __name__ == "__main__":
+    import os
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=False)
