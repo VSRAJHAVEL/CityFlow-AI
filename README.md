@@ -10,6 +10,9 @@ license: mit
 
 # CityFlow AI: Multi-Agent Autonomous Urban Mobility Platform
 
+[![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Live%20Demo-Hugging%20Face%20Spaces-yellow?style=for-the-badge&logo=huggingface)](https://huggingface.co/spaces/VSRAJHAVEL/CityFlow-AI)
+[![Deploy to Render](https://img.shields.io/badge/Deploy%20to-Render-46E3B7?style=for-the-badge&logo=render)](https://render.com/deploy?repo=https://github.com/VSRAJHAVEL/CityFlow-AI)
+
 An advanced Multi-Agent Reinforcement Learning (MARL) traffic optimization and autonomous grid orchestration platform featuring 16 decentralized Q-learning intersection agents, emergency BFS wave corridor preemption, and dual-mode cybernetic dashboards.
 
 ![CityFlow AI Preview](docs/preview.png)
