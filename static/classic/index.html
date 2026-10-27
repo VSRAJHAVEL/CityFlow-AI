@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CityFlow AI - Smart City Traffic Optimization</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/classic/style.css">
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
+      </div>
+      <div class="brand-title">CityFlow AI</div>
+      <span class="brand-badge">Multi-Agent Q-Learning</span>
+    </div>
+    <div class="header-status">
+      <div class="status-pill mode-active" id="systemModePill">
+        <span class="status-dot" id="systemModeDot"></span>
+        <span id="systemModeText">Multi-Agent System (Active)</span>
+      </div>
+      <button id="analyticsToggle" class="toggle-btn" onclick="openAnalyticsModal()">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+        </svg>
+        Analytics
+      </button>
+      <button id="compareToggle" class="toggle-btn" title="Toggle Split-Screen Compare Mode">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/>
+        </svg>
+        Compare
+      </button>
+      <a href="/modern" class="toggle-btn" style="text-decoration:none; color:#aac7ff; border-color:rgba(170,199,255,0.4); background:rgba(170,199,255,0.12); font-weight:600; display:inline-flex; align-items:center; gap:5px;" title="Launch Modern VisionOS Studio Dashboard">
+        <span>✨</span> Modern Studio
+      </a>
+      <a href="/export/csv" class="toggle-btn" style="text-decoration:none;color:var(--text-main)" title="Export Telemetry as CSV">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Export CSV
+      </a>
+      <div class="status-pill">
+        <span>FPS: <strong id="fpsVal">60</strong></span>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-main" id="mainContainer">
+    <!-- Primary Agent Simulation Viewport -->
+    <section class="viewport-card" id="primaryViewport">
+      <div class="viewport-toolbar">
+        <div class="toolbar-title">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line>
+          </svg>
+          <span id="primaryViewportTitle">Autonomous Agent Sector (4x4 Grid)</span>
+        </div>
+        <div class="toolbar-actions">
+          <button id="heatmapToggle" class="toggle-btn" title="Toggle Congestion Heatmap">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2c-4 4-6 7.5-6 11a6 6 0 0 0 12 0c0-3.5-2-7-6-11z"></path>
+            </svg>
+            Heatmap
+          </button>
+        </div>
+      </div>
+
+      <div class="canvas-container" id="canvasContainer">
+        <canvas id="cityCanvas"></canvas>
+        
+        <!-- Agent Inspector Drawer -->
+        <div id="agentInspector" class="agent-inspector">
+          <div class="inspector-header">
+            <div class="inspector-title">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+              <span id="inspNodeTitle">Intersection I(0,0)</span>
+            </div>
+            <button class="inspector-close" onclick="closeInspector()">✕</button>
+          </div>
+
+          <div class="inspector-grid">
+            <div class="inspector-card">
+              <div class="lbl">Phase / State</div>
+              <div class="val" id="inspPhase" style="color:var(--accent-green)">NS-Green</div>
+            </div>
+            <div class="inspector-card">
+              <div class="lbl">Min-Green Timer</div>
+              <div class="val" id="inspTimer">5t</div>
+            </div>
+            <div class="inspector-card">
+              <div class="lbl">Queue (N / S / E / W)</div>
+              <div class="val" id="inspQueues">0 / 0 / 0 / 0</div>
+            </div>
+            <div class="inspector-card">
+              <div class="lbl">Neighbor Congestion</div>
+              <div class="val" id="inspNeighbor">0 vehicles</div>
+            </div>
+          </div>
+
+          <div class="lbl" style="font-size:0.6rem;color:var(--text-dim);text-transform:uppercase;margin-top:3px;">Q-Values (NS vs EW)</div>
+          <div class="q-bars">
+            <div class="q-bar-row">
+              <span style="width:20px;color:var(--text-muted)">NS:</span>
+              <div class="q-bar-track"><div id="qBarNS" class="q-bar-fill" style="width:50%"></div></div>
+              <span id="qValNS" style="width:36px;text-align:right">-</span>
+            </div>
+            <div class="q-bar-row">
+              <span style="width:20px;color:var(--text-muted)">EW:</span>
+              <div class="q-bar-track"><div id="qBarEW" class="q-bar-fill" style="width:50%"></div></div>
+              <span id="qValEW" style="width:36px;text-align:right">-</span>
+            </div>
+          </div>
+
+          <div class="inspector-card" style="margin-top:3px;">
+            <div class="lbl">Decision Policy & Rationale</div>
+            <div class="val" id="inspReason" style="font-size:0.68rem;font-weight:500;color:var(--accent-cyan);margin-top:1px;">-</div>
+          </div>
+
+          <div class="sparkline-box">
+            <div class="lbl">Intersection Wait History</div>
+            <canvas id="sparklineCanvas"></canvas>
+          </div>
+        </div>
+
+        <div id="carTooltip" class="car-tooltip"></div>
+        <div class="city-legend-bar">
+          <div class="legend-badge"><span class="badge-dot" style="background:#00e676"></span> Flowing</div>
+          <div class="legend-badge"><span class="badge-dot" style="background:#ffab00"></span> Delay</div>
+          <div class="legend-badge"><span class="badge-dot" style="background:#ff3366"></span> Waiting</div>
+          <div class="legend-badge"><span class="badge-dot" style="background:#2979ff"></span> Ambulance</div>
+          <div class="legend-badge"><span class="badge-dot" style="background:#ff5252"></span> Blocked</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Secondary Compare Viewport (Baseline Fixed Timer) -->
+    <section class="viewport-card" id="compareViewport">
+      <div class="viewport-toolbar">
+        <div class="toolbar-title" style="color:var(--accent-red)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          Baseline: Fixed Cycle Timer
+        </div>
+      </div>
+      <div class="canvas-container" id="baselineCanvasContainer">
+        <canvas id="baselineCanvas"></canvas>
+      </div>
+    </section>
+
+    <!-- Sidebar Dashboard -->
+    <aside class="sidebar">
+      <!-- Agent Status Hierarchy Cards -->
+      <div class="glass-panel">
+        <div class="panel-header">
+          <span class="panel-title">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            Agent Hierarchy Status
+          </span>
+        </div>
+        <div class="agent-status-cards">
+          <div class="agent-card coord">
+            <div class="agent-card-title"><span class="status-dot" style="background:var(--accent-purple);box-shadow:none"></span>Coordinator</div>
+            <div class="agent-card-state" id="coordState">Active</div>
+            <div class="agent-card-action" id="coordAction" title="Balancing network">Balancing network</div>
+          </div>
+          <div class="agent-card emerg">
+            <div class="agent-card-title"><span class="status-dot" style="background:var(--accent-red);box-shadow:none"></span>Emergency</div>
+            <div class="agent-card-state" id="emergState">Standby</div>
+            <div class="agent-card-action" id="emergAction" title="Monitoring route">Monitoring route</div>
+          </div>
+          <div class="agent-card incid">
+            <div class="agent-card-title"><span class="status-dot" style="background:var(--accent-amber);box-shadow:none"></span>Incident</div>
+            <div class="agent-card-state" id="incidState">Clear</div>
+            <div class="agent-card-action" id="incidAction" title="Monitoring grid">Monitoring grid</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Agent Message Feed -->
+      <div class="glass-panel">
+        <div class="panel-header">
+          <span class="panel-title">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Agent Message Feed
+          </span>
+        </div>
+        <div class="message-feed-container">
+          <div class="feed-filters">
+            <button class="feed-filter-btn active" onclick="setFeedFilter('all', this)">All</button>
+            <button class="feed-filter-btn" onclick="setFeedFilter('coordinator', this)">Coord</button>
+            <button class="feed-filter-btn" onclick="setFeedFilter('emergency', this)">Emerg</button>
+            <button class="feed-filter-btn" onclick="setFeedFilter('incident', this)">Incid</button>
+            <button class="feed-filter-btn" onclick="setFeedFilter('intersection', this)">Inter</button>
+          </div>
+          <div class="message-feed" id="agentMessageFeed">
+            <div class="feed-item coordinator">
+              <div class="feed-meta"><span class="feed-tag">Coordinator</span><span>Tick 0</span></div>
+              <div class="feed-text">Q-learning agents online; monitoring traffic density</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Extended KPI Telemetry Cards -->
+      <div class="glass-panel">
+        <div class="panel-header">
+          <span class="panel-title">Operational KPIs & Deltas</span>
+          <span id="mTickBadge" style="font-size:0.65rem;color:var(--accent-cyan);font-weight:600">Tick 0</span>
+        </div>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="val" id="mWait">-</div>
+            <div class="lbl">Agent Avg Wait</div>
+          </div>
+          <div class="metric-card">
+            <div class="val" id="mBase">-</div>
+            <div class="lbl">Baseline Wait</div>
+          </div>
+          <div class="metric-card">
+            <div class="val green" id="mThru">-</div>
+            <div class="lbl">Vehicles Cleared</div>
+          </div>
+          <div class="metric-card">
+            <div class="val" id="mEfficiency">-</div>
+            <div class="lbl">Agent Δ Improvement</div>
+          </div>
+          <div class="metric-card">
+            <div class="val green" id="mStops">-</div>
+            <div class="lbl">Avg Stops / Car</div>
+          </div>
+          <div class="metric-card">
+            <div class="val amber" id="mCO2">-</div>
+            <div class="lbl">CO2 / Fuel Saved</div>
+          </div>
+          <div class="metric-card full-width">
+            <div>
+              <div class="lbl" style="margin:0 0 2px 0">Emergency Response Transit</div>
+              <div style="font-size:0.62rem;color:var(--text-dim)">Latest Corridor Duration</div>
+            </div>
+            <div class="val amber" id="mAmb" style="font-size:1.2rem">-</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Operations & Sliders -->
+      <div class="glass-panel">
+        <div class="scenario-bar">
+          <button class="preset-btn active" onclick="setScenario('normal', this)">Normal</button>
+          <button class="preset-btn" onclick="setScenario('rush_hour', this)">Rush Hour</button>
+          <button class="preset-btn" onclick="setScenario('accident', this)">Accident</button>
+          <button class="preset-btn" onclick="setScenario('event_surge', this)">Event Surge</button>
+          <button class="preset-btn" onclick="setScenario('emergency_drill', this)">Emergency Drill</button>
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-row">
+            <div class="slider-label"><span>Traffic Density</span><strong id="densityVal">1.0x</strong></div>
+            <input type="range" id="sliderDensity" min="0.5" max="3.5" step="0.1" value="1.0">
+          </div>
+          <div class="slider-row">
+            <div class="slider-label"><span>Simulation Speed</span><strong id="speedVal">1.0x</strong></div>
+            <input type="range" id="sliderSpeed" min="0.5" max="8.0" step="0.5" value="1.0">
+          </div>
+          <div class="slider-row">
+            <div class="slider-label"><span>Exploration (ε)</span><strong id="epsVal">0.05</strong></div>
+            <input type="range" id="sliderEps" min="0.00" max="0.40" step="0.01" value="0.05">
+          </div>
+        </div>
+
+        <div class="btn-grid">
+          <button class="action-btn" id="btnPause" onclick="ctrl('pause')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+            <span id="pauseLabel">Pause</span>
+          </button>
+          <button class="action-btn" onclick="ctrl('step')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2"/></svg>
+            Step
+          </button>
+          <button class="action-btn primary" onclick="ctrl('spawn_emergency')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+            Ambulance
+          </button>
+          <button class="action-btn warning" onclick="ctrl('spawn_incident')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            Incident
+          </button>
+          <button class="action-btn mode-toggle" id="btnToggleMode" style="grid-column:span 2" onclick="toggleControlMode()">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+            <span id="btnToggleModeLabel">Switch to Fixed Timer</span>
+          </button>
+        </div>
+
+        <div class="kbd-hint">
+          <span>Shortcuts:</span>
+          <span><span class="kbd-chip">Space</span> Pause</span>
+          <span><span class="kbd-chip">S</span> Step</span>
+          <span><span class="kbd-chip">R</span> Reset</span>
+          <span><span class="kbd-chip">E</span> Amb</span>
+          <span><span class="kbd-chip">I</span> Inc</span>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <footer style="display:flex;align-items:center;justify-content:center;gap:12px;padding:12px 16px;background:rgba(10,13,20,0.85);backdrop-filter:blur(12px);border-top:1px solid rgba(255,255,255,0.08);color:#94a3b8;font-size:0.8rem;margin-top:auto;">
+    <span>Handcrafted by <strong style="color:#c084fc;">RAJHAVEL V S</strong></span>
+    <span>•</span>
+    <a href="https://www.linkedin.com/in/rajhavelvs/" target="_blank" rel="noopener noreferrer" style="color:#38bdf8;text-decoration:none;">LinkedIn</a>
+    <span>•</span>
+    <a href="https://vsrajhavel.github.io" target="_blank" rel="noopener noreferrer" style="color:#2dd4bf;text-decoration:none;">Portfolio (vsrajhavel.github.io)</a>
+    <span>•</span>
+    <a href="https://github.com/VSRAJHAVEL" target="_blank" rel="noopener noreferrer" style="color:#f8fafc;text-decoration:none;">GitHub (@VSRAJHAVEL)</a>
+  </footer>
+
+  <!-- Full-Width Analytics & Transparency Dashboard Modal -->
+  <div id="analyticsModal" class="analytics-modal">
+    <div class="analytics-content">
+      <div class="analytics-header">
+        <div class="analytics-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+          </svg>
+          CityFlow Comprehensive Performance Analytics
+        </div>
+        <div style="display:flex;gap:10px;align-items:center">
+          <a href="/export/csv" class="action-btn primary" style="text-decoration:none;padding:6px 12px;font-size:0.75rem">
+            📥 Download Metrics CSV
+          </a>
+          <button class="action-btn" onclick="closeAnalyticsModal()" style="padding:6px 10px;">✕ Close</button>
+        </div>
+      </div>
+      <div class="analytics-body">
+        <div class="chart-card">
+          <div class="chart-card-title">Average Wait Time Over Simulation (Ticks)</div>
+          <div class="chart-box"><canvas id="fullWaitChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-card-title">Total Vehicle Throughput Over Simulation</div>
+          <div class="chart-box"><canvas id="fullThroughputChart"></canvas></div>
+        </div>
+        <div class="chart-card full">
+          <div class="chart-card-title">Per-Intersection Congestion Distribution (16 Network Nodes: Agent vs Fixed Timer)</div>
+          <div class="chart-box"><canvas id="fullBarChart"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/classic/app.js"></script>
+</body>
+</html>

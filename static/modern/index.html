@@ -1,0 +1,1790 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>CityFlow AI - Autonomous Urban Mobility</title><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }
+/* Daylight & Night VisionOS Theme Architecture */
+header {
+  background: linear-gradient(to bottom, rgba(19, 19, 23, 0.94) 0%, rgba(19, 19, 23, 0.75) 75%, transparent 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+html:not(.dark) header {
+  background: linear-gradient(to bottom, rgba(248, 250, 252, 0.95) 0%, rgba(248, 250, 252, 0.78) 75%, transparent 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+html:not(.dark) {
+  color-scheme: light;
+}
+/* Dynamic Dual-Mode Background Architecture */
+body {
+  background-color: #07080e !important;
+  background-image: linear-gradient(180deg, rgba(7, 8, 14, 0.45) 0%, rgba(7, 8, 14, 0.2) 35%, rgba(7, 8, 14, 0.3) 70%, rgba(7, 8, 14, 0.65) 100%), url('/static/modern/bg-dark.png'), url('/bg-dark.png') !important;
+  background-size: cover !important;
+  background-position: center top !important;
+  background-attachment: fixed !important;
+  background-repeat: no-repeat !important;
+}
+
+html:not(.dark) body {
+  background-color: #f6f8fd !important;
+  background-image: linear-gradient(180deg, rgba(246, 248, 253, 0.45) 0%, rgba(246, 248, 253, 0.2) 35%, rgba(246, 248, 253, 0.3) 70%, rgba(246, 248, 253, 0.6) 100%), url('/static/modern/bg-light.png'), url('/bg-light.png') !important;
+  background-size: cover !important;
+  background-position: center top !important;
+  background-attachment: fixed !important;
+  background-repeat: no-repeat !important;
+  color: #0f172a !important;
+}
+html:not(.dark) .bg-background {
+  background-color: transparent !important;
+}
+html:not(.dark) .text-white,
+html:not(.dark) .text-on-surface,
+html:not(.dark) h1, html:not(.dark) h2, html:not(.dark) h3, html:not(.dark) h4 {
+  color: #0f172a !important;
+}
+html:not(.dark) .text-on-surface-variant {
+  color: #475569 !important;
+}
+html:not(.dark) [class*="bg-surface-container"] {
+  background-color: rgba(255, 255, 255, 0.96) !important;
+  border-color: rgba(124, 58, 237, 0.1) !important;
+  color: #0f172a !important;
+  box-shadow: 0 8px 24px -4px rgba(124, 58, 237, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.02) !important;
+}
+html:not(.dark) header > div {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(124, 58, 237, 0.12) !important;
+  box-shadow: 0 16px 36px -8px rgba(124, 58, 237, 0.09) !important;
+/* ── Unified Navbar Typography ── */
+nav a, nav a:visited, nav a:link {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-size: 13px !important;
+  line-height: 18px !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.01em !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  white-space: nowrap !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+nav a[aria-current="page"] {
+  font-weight: 600 !important;
+}
+
+html:not(.dark) nav a[aria-current="page"] {
+  background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.3) !important;
+}
+html:not(.dark) nav a:not([aria-current="page"]) {
+  color: #475569 !important;
+}
+html:not(.dark) nav a:not([aria-current="page"]):hover {
+  color: #7c3aed !important;
+  background-color: rgba(124, 58, 237, 0.06) !important;
+}
+html:not(.dark) .border-white\/10,
+html:not(.dark) .border-white\/5,
+html:not(.dark) .border-white\/15,
+html:not(.dark) .border-white\/20,
+html:not(.dark) .border-white\/30 {
+  border-color: rgba(124, 58, 237, 0.1) !important;
+}
+html:not(.dark) .text-primary,
+html:not(.dark) .text-primary-fixed {
+  color: #7c3aed !important;
+}
+html:not(.dark) .text-secondary,
+html:not(.dark) .text-secondary-fixed {
+  color: #0d9488 !important;
+}
+html:not(.dark) .text-tertiary,
+html:not(.dark) .text-tertiary-fixed {
+  color: #059669 !important;
+}
+html:not(.dark) .text-error {
+  color: #e11d48 !important;
+}
+html:not(.dark) .bg-primary-container\/10,
+html:not(.dark) .bg-primary-container\/15,
+html:not(.dark) .bg-primary-container\/20 {
+  background-color: rgba(124, 58, 237, 0.08) !important;
+  border-color: rgba(124, 58, 237, 0.25) !important;
+  color: #6d28d9 !important;
+}
+html:not(.dark) .bg-secondary-container\/10,
+html:not(.dark) .bg-secondary-container\/15,
+html:not(.dark) .bg-secondary-container\/20 {
+  background-color: rgba(13, 148, 136, 0.08) !important;
+  border-color: rgba(13, 148, 136, 0.25) !important;
+  color: #0f766e !important;
+}
+html:not(.dark) .bg-tertiary-container\/10,
+html:not(.dark) .bg-tertiary-container\/15,
+html:not(.dark) .bg-tertiary-container\/20 {
+  background-color: rgba(16, 185, 129, 0.08) !important;
+  border-color: rgba(16, 185, 129, 0.25) !important;
+  color: #047857 !important;
+}
+html:not(.dark) .bg-error-container\/15,
+html:not(.dark) .bg-error-container\/20,
+html:not(.dark) .bg-error-container\/30 {
+  background-color: rgba(225, 29, 72, 0.08) !important;
+  border-color: rgba(225, 29, 72, 0.25) !important;
+  color: #be123c !important;
+}
+html:not(.dark) #simContainer {
+  background-color: #ebf0f8 !important;
+  border: 1px solid rgba(124, 58, 237, 0.12) !important;
+}
+html:not(.dark) #modernCityCanvas,
+html:not(.dark) #splitAiCanvas,
+html:not(.dark) #splitBaseCanvas {
+  border-color: rgba(124, 58, 237, 0.15) !important;
+}
+html:not(.dark) #carTooltip,
+html:not(.dark) #inspectorCard {
+  background-color: rgba(255, 255, 255, 0.98) !important;
+  border-color: rgba(124, 58, 237, 0.18) !important;
+  color: #0f172a !important;
+  box-shadow: 0 20px 40px -10px rgba(124, 58, 237, 0.12) !important;
+}
+html:not(.dark) footer > div {
+  background-color: rgba(255, 255, 255, 0.96) !important;
+  border-color: rgba(124, 58, 237, 0.12) !important;
+  box-shadow: 0 16px 36px -8px rgba(124, 58, 237, 0.09) !important;
+  color: #0f172a !important;
+}
+html:not(.dark) footer kbd {
+  background-color: rgba(124, 58, 237, 0.08) !important;
+  color: #7c3aed !important;
+}
+html:not(.dark) footer span {
+  color: #475569 !important;
+}
+html:not(.dark) footer strong {
+  color: #0f172a !important;
+}
+html:not(.dark) #cmdPaletteModal > div {
+  background-color: rgba(255, 255, 255, 0.98) !important;
+  border-color: rgba(124, 58, 237, 0.18) !important;
+  color: #0f172a !important;
+  box-shadow: 0 32px 64px -16px rgba(124, 58, 237, 0.2) !important;
+}
+html:not(.dark) .cmd-action-btn {
+  background-color: rgba(245, 247, 253, 0.9) !important;
+  border-color: rgba(124, 58, 237, 0.08) !important;
+  color: #0f172a !important;
+}
+html:not(.dark) .cmd-action-btn:hover {
+  background-color: rgba(243, 232, 255, 0.8) !important;
+  border-color: rgba(124, 58, 237, 0.3) !important;
+}
+html:not(.dark) .cmd-action-btn kbd {
+  background-color: rgba(124, 58, 237, 0.08) !important;
+  color: #7c3aed !important;
+}
+html:not(.dark) .speed-btn {
+  color: #475569 !important;
+}
+html:not(.dark) .speed-btn.bg-surface-bright {
+  background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%) !important;
+  color: #ffffff !important;
+}
+html:not(.dark) #presetNormal,
+html:not(.dark) #presetRush,
+html:not(.dark) #presetBlockade,
+html:not(.dark) #presetHospital {
+  background-color: rgba(255, 255, 255, 0.92) !important;
+  border-color: rgba(124, 58, 237, 0.1) !important;
+  color: #0f172a !important;
+}
+html:not(.dark) #presetNormal:hover,
+html:not(.dark) #presetRush:hover,
+html:not(.dark) #presetBlockade:hover,
+html:not(.dark) #presetHospital:hover {
+  background-color: rgba(243, 232, 255, 0.7) !important;
+  border-color: rgba(124, 58, 237, 0.25) !important;
+}
+html:not(.dark) #fpsBadge {
+  background-color: rgba(16, 185, 129, 0.1) !important;
+  border-color: rgba(16, 185, 129, 0.25) !important;
+  color: #059669 !important;
+}
+html:not(.dark) #telemetryBindingJson {
+  background-color: #f5f3ff !important;
+  border-color: rgba(124, 58, 237, 0.15) !important;
+  color: #7c3aed !important;
+}
+html:not(.dark) .bg-surface-container-highest {
+  background-color: #e8ecf8 !important;
+}
+
+/* ── Light Mode: Ambient Background Blobs ── */
+html:not(.dark) .fixed.inset-0.pointer-events-none .absolute {
+  opacity: 0.18 !important;
+}
+
+/* ── Light Mode: Metric Numbers ── */
+html:not(.dark) .font-metric-xl, html:not(.dark) [class*="text-metric-xl"] {
+  color: #0f172a !important;
+}
+html:not(.dark) #kpiWaitVal { color: #059669 !important; }
+html:not(.dark) #kpiFuelVal { color: #0d9488 !important; }
+html:not(.dark) #kpiBadge { color: #7c3aed !important; }
+
+/* ── Light Mode: Canvas viewport top bar ── */
+html:not(.dark) #viewportModeTitle { color: #0f172a !important; }
+html:not(.dark) #viewportSubhead { color: #475569 !important; }
+
+/* ── Light Mode: Sim Container & Canvases ── */
+html:not(.dark) #simContainer {
+  background-color: #edf2fa !important;
+}
+html:not(.dark) #compareWrapper {
+  background-color: #e2e8f0 !important;
+}
+
+/* ── Light Mode: Speed Buttons ── */
+html:not(.dark) .speed-btn {
+  color: #475569 !important;
+}
+html:not(.dark) .speed-btn.bg-surface-bright {
+  background-color: #0f172a !important;
+  color: #ffffff !important;
+}
+
+/* ── Light Mode: Mode toggle pills (AI/Compare/Fixed) ── */
+html:not(.dark) #modeAi, html:not(.dark) #modeCompare, html:not(.dark) #modeFixed {
+  background-color: transparent !important;
+  color: #475569 !important;
+}
+
+/* ── Light Mode: Form Inputs & Selects (Incidents/Corridors page) ── */
+html:not(.dark) select,
+html:not(.dark) input[type="number"] {
+  background-color: rgba(241, 245, 249, 0.95) !important;
+  border-color: rgba(15, 23, 42, 0.12) !important;
+  color: #0f172a !important;
+}
+html:not(.dark) select option {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+/* ── Light Mode: Log Stream Items ── */
+html:not(.dark) .log-item {
+  background-color: rgba(241, 245, 249, 0.8) !important;
+  color: #0f172a !important;
+}
+html:not(.dark) .log-item:hover {
+  background-color: rgba(226, 232, 240, 0.95) !important;
+}
+html:not(.dark) #logStream .font-body-md {
+  color: #0f172a !important;
+}
+
+/* ── Light Mode: Tables ── */
+html:not(.dark) table td,
+html:not(.dark) table th {
+  color: #0f172a !important;
+}
+html:not(.dark) table tbody tr:hover {
+  background-color: rgba(241, 245, 249, 0.7) !important;
+}
+html:not(.dark) .divide-y.divide-white\/5 > * + * {
+  border-color: rgba(15, 23, 42, 0.06) !important;
+}
+
+/* ── Light Mode: Congestion Matrix Cells ── */
+html:not(.dark) #congestionMatrix > div {
+  background-color: rgba(248, 250, 252, 0.9) !important;
+  border-color: rgba(15, 23, 42, 0.08) !important;
+  color: #0f172a !important;
+}
+
+/* ── Light Mode: Agent Hierarchy Cards ── */
+html:not(.dark) #hierarchyAgentGrid > div {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(124, 58, 237, 0.1) !important;
+}
+
+/* ── Light Mode: Command Palette Backdrop ── */
+html:not(.dark) #cmdPaletteModal {
+  background-color: rgba(15, 23, 42, 0.5) !important;
+}
+
+/* ── Light Mode: Telemetry JSON display ── */
+html:not(.dark) code {
+  background-color: rgba(124, 58, 237, 0.08) !important;
+  color: #7c3aed !important;
+  padding: 0 4px;
+  border-radius: 4px;
+}
+
+/* ── Light Mode: Nav pill toggle container ── */
+html:not(.dark) nav > .bg-surface-container-lowest\/50 {
+  background-color: rgba(255, 255, 255, 0.75) !important;
+  border-color: rgba(124, 58, 237, 0.12) !important;
+}
+
+/* ── Light Mode: Marquee bar ── */
+html:not(.dark) .animate-\[marquee_28s_linear_infinite\] .bg-surface-container-high\/60 {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* ── Light Mode: Active Barricades List ── */
+html:not(.dark) #activeBarricadesList > div:first-child {
+  background-color: rgba(245, 247, 253, 0.85) !important;
+}
+
+/* ── Light Mode: About page code blocks ── */
+html:not(.dark) .bg-surface-container-lowest {
+  background-color: #f1f4fb !important;
+  color: #0f172a !important;
+}
+html:not(.dark) .font-mono.text-secondary-fixed {
+  color: #0d9488 !important;
+}
+html:not(.dark) .font-mono.text-tertiary-fixed {
+  color: #059669 !important;
+}
+
+/* ── Light Mode: Sparkline SVGs ── */
+html:not(.dark) #kpiWaitVal + * + svg { color: #059669 !important; }
+
+/* ── Light Mode: Marquee container ── */
+html:not(.dark) .relative.w-full.overflow-hidden.rounded-full {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(124, 58, 237, 0.1) !important;
+}
+
+/* ── Light Mode: Inspector Card ── */
+html:not(.dark) #inspectorCard .border-t { border-color: rgba(124, 58, 237, 0.1) !important; }
+html:not(.dark) #inspectorCard strong { color: #0f172a; }
+html:not(.dark) #inspectorCard #inspectTitle { color: #7c3aed !important; }
+
+/* ── Light Mode: Dispatch action buttons ── */
+html:not(.dark) #btnDispatchAmb { color: #0d9488 !important; }
+html:not(.dark) #btnInjectHazard { color: #e11d48 !important; }
+
+/* ── Keyframe Animations ── */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+/* ── Ambient Floating Glow Orbs ── */
+#ambientBackdrop {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  background: transparent !important;
+}
+
+html:not(.dark) #ambientBackdrop {
+  background: transparent !important;
+}
+</style><script src="https://cdn.jsdelivr.net/npm/chart.js"></script><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "primary-fixed": "#f3e8ff", "on-tertiary-fixed": "#022c22", "secondary-fixed": "#00f5d4", "on-secondary-fixed": "#02201b", "outline": "#475569", "surface-container-low": "#0d101c", "inverse-surface": "#f8fafc", "tertiary-fixed-dim": "#22c55e", "primary-fixed-dim": "#a855f7", "tertiary-container": "#047857", "surface-bright": "#242a42", "tertiary": "#10f49c", "error-container": "#9f1239", "on-background": "#f1f5f9", "surface": "#0c0e18", "on-primary-container": "#f3e8ff", "primary": "#c084fc", "surface-container-high": "#1b2137", "on-surface-variant": "#94a3b8", "on-tertiary-container": "#dcfce7", "tertiary-fixed": "#4ade80", "surface-tint": "#c084fc", "on-tertiary": "#052e16", "error": "#ff3366", "primary-container": "#7c3aed", "inverse-primary": "#9333ea", "on-error-container": "#ffe4e6", "on-surface": "#f8fafc", "secondary": "#2dd4bf", "on-secondary": "#022c22", "on-secondary-container": "#ccfbf1", "surface-container-lowest": "#06070c", "surface-container": "#131726", "secondary-fixed-dim": "#14b8a6", "outline-variant": "#1e293b", "on-secondary-fixed-variant": "#0f766e", "on-primary": "#1e0538", "secondary-container": "#0f766e", "on-primary-fixed": "#3b0764", "on-tertiary-fixed-variant": "#065f46", "surface-variant": "#1a1f33", "surface-dim": "#080911", "on-error": "#4c0519", "surface-container-highest": "#252d4a", "background": "#07080e", "inverse-on-surface": "#0f172a", "on-primary-fixed-variant": "#6b21a8" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-sm": "0.5rem", "space-md": "1rem", "gutter": "1rem", "space-xs": "0.25rem", "gutter-desktop": "1.25rem", "margin-desktop": "2.5rem", "space-xl": "2.25rem", "space-lg": "1.5rem", "margin": "1rem", "margin-tablet": "1.5rem" }, "fontFamily": { "display-hero-mobile": ["Inter"], "display-hero": ["Inter"], "headline-sm": ["Inter"], "code-telemetry": ["Inter"], "headline-lg": ["Inter"], "body-md": ["Inter"], "label-sm": ["Inter"], "label-md": ["Inter"], "metric-xl": ["Inter"], "body-lg": ["Inter"], "metric-xl-mobile": ["Inter"], "headline-md": ["Inter"] }, "fontSize": { "display-hero-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "300" }], "display-hero": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.03em", "fontWeight": "200" }], "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "600" }], "code-telemetry": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "400" }], "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.015em", "fontWeight": "500" }], "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }], "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }], "metric-xl": ["44px", { "lineHeight": "48px", "letterSpacing": "-0.025em", "fontWeight": "200" }], "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }], "metric-xl-mobile": ["32px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "300" }], "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }] } } } };</script></head><body class="bg-background text-on-surface antialiased relative min-h-screen selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden"><div id="ambientBackdrop" class="fixed inset-0 pointer-events-none z-0 overflow-hidden"><div class="absolute -top-[12%] left-1/4 w-[750px] h-[750px] rounded-full bg-[#7c3aed]/20 blur-[160px] pointer-events-none"></div><div class="absolute top-[35%] -right-[8%] w-[650px] h-[650px] rounded-full bg-[#00f5d4]/15 blur-[160px] pointer-events-none"></div><div class="absolute -bottom-[15%] left-[8%] w-[850px] h-[850px] rounded-full bg-[#ff3366]/12 blur-[170px] pointer-events-none"></div></div><header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-center pt-space-sm px-margin pointer-events-none"><div class="h-16 w-full max-w-[1560px] mx-auto px-space-md bg-surface-container-low/70 backdrop-blur-2xl rounded-full shadow-[0_20px_40px_-10px_rgba(0,0,0,0.45)] border border-white/10 flex items-center justify-between pointer-events-auto transition-all"><div class="flex items-center gap-space-sm"><div class="w-9 h-9 rounded-full bg-primary-container/20 flex items-center justify-center border border-primary/30 shadow-[0_0_12px_rgba(170,199,255,0.25)]"><span class="material-symbols-outlined text-primary text-[20px]">hub</span></div><div class="flex flex-col"><div class="flex items-center gap-space-xs"><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight font-semibold">CityFlow AI</span><span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded-full bg-surface-container-highest/60 text-secondary-fixed border border-white/5 font-code-telemetry">v3.0</span></div><span class="font-code-telemetry text-[10px] text-on-surface-variant uppercase tracking-wider leading-none">Sequoia MARL</span></div></div><nav class="flex items-center gap-1 bg-surface-container-lowest/50 p-1 rounded-full border border-white/5 overflow-x-auto max-w-[620px]"><a aria-current="page" class="px-3.5 py-1.5 rounded-full transition-all bg-surface-container-highest text-on-surface font-semibold shadow-inner border border-white/10 shrink-0" data-path="simulation-cockpit" href="#simulation-cockpit">Simulation Cockpit</a><a class="px-3.5 py-1.5 rounded-full transition-all text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-medium border border-transparent shrink-0" data-path="agent-hierarchy" href="#agent-hierarchy">Agent Hierarchy</a><a class="px-3.5 py-1.5 rounded-full transition-all text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-medium border border-transparent shrink-0" data-path="telemetry-analytics" href="#telemetry-analytics">Telemetry &amp; Analytics</a><a class="px-3.5 py-1.5 rounded-full transition-all text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-medium border border-transparent shrink-0" data-path="incidents-corridors" href="#incidents-corridors">Incidents &amp; Corridors</a><a class="px-3.5 py-1.5 rounded-full transition-all text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-medium border border-transparent shrink-0" data-path="about" href="#about">About</a></nav><div class="flex items-center gap-space-sm"><div class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-tertiary-container/10 border border-tertiary/20 shadow-[0_0_12px_rgba(71,226,102,0.1)]"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary"></span></span><span id="headerTickText" class="font-code-telemetry text-code-telemetry text-tertiary-fixed">Tick 0 • 1.0x • 60 FPS (60Hz+)</span></div><a href="/classic" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary-container/15 hover:bg-primary-container/30 text-primary-fixed border border-primary/30 font-label-md text-label-md transition-all" title="Return to Classic View"><span class="material-symbols-outlined text-[16px]">dashboard</span><span>Classic View</span></a><button id="themeToggle" aria-label="Toggle Theme" class="h-9 w-9 rounded-full bg-surface-container-high/60 hover:bg-surface-container-highest hover:text-on-surface text-on-surface-variant flex items-center justify-center border border-white/10 transition-colors cursor-pointer" type="button"><span id="themeIcon" class="material-symbols-outlined text-[18px]">dark_mode</span></button><button id="btnExportCsv" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-high/60 hover:bg-surface-container-highest hover:text-on-surface text-on-surface-variant border border-white/10 font-label-md text-label-md transition-all" type="button"><span class="material-symbols-outlined text-[16px]">download</span><span>Export CSV</span></button><div id="btnOpenCommandPalette" class="hidden lg:flex items-center gap-1 px-2.5 py-1.5 rounded-full bg-surface-container-highest/40 hover:bg-surface-container-highest/80 border border-white/5 text-on-surface-variant hover:text-white font-code-telemetry text-code-telemetry cursor-pointer transition-all" title="Press Ctrl+K for Windows Quick Actions"><kbd class="font-mono text-[10px] px-1 py-0.5 rounded bg-white/10 text-primary font-bold">Ctrl</kbd><span class="text-white/40">+</span><kbd class="font-mono text-[10px] px-1 py-0.5 rounded bg-white/10 text-white font-bold">K</kbd></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shadow-sm ml-1"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="relative z-10 w-full pt-32 pb-32 min-h-screen px-4 lg:px-8 max-w-[1650px] mx-auto"><section id="page-simulation-cockpit" class="page-view flex flex-col w-full">
+<!-- Top Marquee Bar: Infinite Optic Glass Chip Reel -->
+<div class="relative w-full overflow-hidden rounded-full bg-surface-container-low/60 backdrop-blur-2xl shadow-lg border border-white/10 py-2.5 px-4 mb-5">
+<div class="flex items-center gap-6 whitespace-nowrap animate-[marquee_28s_linear_infinite] hover:[animation-play-state:paused]">
+<div class="flex items-center gap-2 px-3 py-1 rounded-full bg-primary-container/15 border border-primary/25 shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+<span class="font-code-telemetry text-code-telemetry text-primary-fixed uppercase font-medium">Q-Learning Bellman Updates (α=0.12, γ=0.95)</span>
+</div>
+<div class="flex items-center gap-2 px-3 py-1 rounded-full bg-tertiary-container/15 border border-tertiary/25 shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span class="font-code-telemetry text-code-telemetry text-tertiary-fixed font-medium">BFS Green Wave Preemption Active</span>
+</div>
+<div class="flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high/60 border border-white/10 shadow-sm">
+<span class="material-symbols-outlined text-secondary-fixed text-[13px]">cable</span>
+<span class="font-code-telemetry text-code-telemetry text-on-surface-variant font-medium">Decoupled Pub-Sub Message Bus (Zero-Copy)</span>
+</div>
+<div class="flex items-center gap-2 px-3 py-1 rounded-full bg-error-container/20 border border-error/30 shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-error animate-ping"></span>
+<span class="font-code-telemetry text-code-telemetry text-error font-medium">Dynamic Barricade Rerouting: (2,1) East Blocked</span>
+</div>
+<div class="flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high/60 border border-white/10 shadow-sm">
+<span class="material-symbols-outlined text-tertiary-fixed text-[13px]">sync</span>
+<span class="font-code-telemetry text-code-telemetry text-on-surface font-medium">16 Q-Agents Synced • Loss: 0.0041</span>
+</div>
+<div class="flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high/60 border border-white/10 shadow-sm">
+<span class="font-code-telemetry text-code-telemetry text-on-surface-variant">Parallel 15t Baseline Delta: +45.6%</span>
+</div>
+<div class="flex items-center gap-2 px-3 py-1 rounded-full bg-primary-container/10 border border-primary/20 shadow-sm">
+<span class="font-code-telemetry text-code-telemetry text-primary">FastAPI Asynchronous Loop (4.2ms)</span>
+</div>
+<div class="flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high/60 border border-white/10 shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-fixed"></span>
+<span class="font-code-telemetry text-code-telemetry text-secondary-fixed">60 FPS Hardware Render Buffer</span>
+</div>
+<!-- Cloned Reel for Seamless Infinity Loop -->
+<div class="flex items-center gap-2 px-3 py-1 rounded-full bg-primary-container/15 border border-primary/25 shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+<span class="font-code-telemetry text-code-telemetry text-primary-fixed uppercase font-medium">Q-Learning Bellman Updates (α=0.12, γ=0.95)</span>
+</div>
+<div class="flex items-center gap-2 px-3 py-1 rounded-full bg-tertiary-container/15 border border-tertiary/25 shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span class="font-code-telemetry text-code-telemetry text-tertiary-fixed font-medium">BFS Green Wave Preemption Active</span>
+</div>
+</div>
+</div>
+<!-- Ambient Hero Headline & Spatial Floating Stat Pills -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-5 mb-6 pt-1">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="px-2.5 py-0.5 rounded-full bg-primary/10 border border-primary/20 font-code-telemetry text-[11px] text-primary uppercase tracking-widest font-semibold">Autonomous Grid Orchestration</span>
+<span class="text-outline-variant font-code-telemetry text-[12px]">•</span>
+<span class="font-code-telemetry text-[11px] text-on-surface-variant tracking-wider uppercase">Region: Sequoia Metro 4x4 Grid</span>
+</div>
+<h1 class="text-3xl sm:text-4xl lg:text-[46px] font-light text-white tracking-tight flex items-baseline gap-3 flex-wrap">
+<span>Traffic that</span>
+<span class="bg-gradient-to-r from-primary-fixed via-secondary-fixed to-primary bg-clip-text text-transparent font-medium">thinks.</span>
+</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xl mt-1.5 leading-relaxed">
+        16 decentralized reinforcement-learning Q-agents coordinating phase states in microsecond consensus with deterministic BFS emergency override corridors.
+      </p>
+</div>
+<!-- 3 VisionOS Dynamic Stat Pills -->
+<div class="flex items-center flex-wrap sm:flex-nowrap gap-3">
+<div class="flex items-center gap-3 px-4 py-3 rounded-2xl bg-surface-container-low/70 backdrop-blur-2xl border border-white/10 shadow-[0_12px_24px_-8px_rgba(0,0,0,0.5)]">
+<div class="w-10 h-10 rounded-xl bg-tertiary-container/20 border border-tertiary/30 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[22px]">timer_10</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Queue Delay</span>
+<div class="flex items-baseline gap-1.5">
+<span id="heroDelayPct" class="font-headline-md text-headline-md font-bold text-tertiary-fixed">72.3%</span>
+<span class="font-label-sm text-label-sm text-tertiary font-medium">Reduction</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 rounded-2xl bg-surface-container-low/70 backdrop-blur-2xl border border-white/10 shadow-[0_12px_24px_-8px_rgba(0,0,0,0.5)]">
+<div class="w-10 h-10 rounded-xl bg-primary-container/20 border border-primary/30 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">speed</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">System Flow</span>
+<div class="flex items-baseline gap-1.5">
+<span id="heroFlowPct" class="font-headline-md text-headline-md font-bold text-primary-fixed">+45.6%</span>
+<span class="font-label-sm text-label-sm text-primary font-medium">Throughput</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 rounded-2xl bg-surface-container-low/70 backdrop-blur-2xl border border-white/10 shadow-[0_12px_24px_-8px_rgba(0,0,0,0.5)]">
+<div class="w-10 h-10 rounded-xl bg-secondary-container/20 border border-secondary/30 flex items-center justify-center text-secondary-fixed">
+<span class="material-symbols-outlined text-[22px]">emergency_share</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Ambulance ETA</span>
+<div class="flex items-baseline gap-1.5">
+<span id="heroAmbEta" class="font-headline-md text-headline-md font-bold text-secondary-fixed">18.2t</span>
+<span class="font-label-sm text-label-sm text-secondary-fixed font-medium">Faster BFS</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Primary Asymmetric Bento Grid Canvas -->
+<div class="grid grid-cols-12 gap-5">
+<!-- LEFT COLUMN: Live Inflow & Parametric Tuning (3 cols on desktop) -->
+<div class="col-span-12 lg:col-span-3 flex flex-col gap-4">
+<!-- Inflow Parameters Card -->
+<div class="p-space-lg rounded-[26px] bg-surface-container-low/60 backdrop-blur-3xl border border-white/10 shadow-[0_24px_48px_-12px_rgba(0,0,0,0.55)] flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-3 mb-4 border-b border-white/5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">tune</span>
+<span class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider font-semibold">Mesh Policy Tuning</span>
+</div>
+<span class="font-code-telemetry text-[11px] text-tertiary-fixed px-2 py-0.5 rounded-full bg-tertiary-container/15 border border-tertiary/20 font-mono">LIVE SYNC</span>
+</div>
+<!-- Slider 1: Traffic Density Multiplier -->
+<div class="space-y-2 mb-5">
+<div class="flex items-center justify-between font-label-md text-label-md">
+<span class="text-on-surface-variant">Inflow Demand Multiplier</span>
+<span class="font-code-telemetry text-primary-fixed font-bold bg-surface-container-highest/60 px-2 py-0.5 rounded-md border border-white/5" id="densityVal">1.00x</span>
+</div>
+<div class="relative w-full h-2 rounded-full bg-surface-container-highest overflow-hidden">
+<div class="absolute top-0 left-0 h-full bg-gradient-to-r from-primary via-primary-container to-secondary-fixed rounded-full w-[35%] transition-all" id="densityTrack"></div>
+<input class="absolute inset-0 opacity-0 cursor-pointer w-full" id="densityInput" max="3.5" min="0.2" step="0.05" type="range" value="1.0"/>
+</div>
+<div class="flex justify-between font-code-telemetry text-[10px] text-on-surface-variant/70">
+<span>0.2x Off-Peak</span>
+<span class="text-primary-fixed">1.0x Normal</span>
+<span>3.5x Surge</span>
+</div>
+<!-- Dynamic Mini Wave Sparkline -->
+<div class="pt-1">
+<svg class="w-full h-8 text-primary/70" fill="none" preserveaspectratio="none" viewbox="0 0 200 32">
+<path d="M0,18 C20,12 40,24 60,14 C80,4 100,22 120,16 C140,8 160,26 180,12 L200,15" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+<path d="M0,18 C20,12 40,24 60,14 C80,4 100,22 120,16 C140,8 160,26 180,12 L200,15 L200,32 L0,32 Z" fill="currentColor" fill-opacity="0.08"></path>
+</svg>
+</div>
+</div>
+<!-- Slider 2: MARL Exploration (Epsilon) -->
+<div class="space-y-2 mb-5">
+<div class="flex items-center justify-between font-label-md text-label-md">
+<span class="text-on-surface-variant">Exploration Decay (ε)</span>
+<span class="font-code-telemetry text-secondary-fixed font-bold bg-surface-container-highest/60 px-2 py-0.5 rounded-md border border-white/5" id="epsilonVal">0.050</span>
+</div>
+<div class="relative w-full h-2 rounded-full bg-surface-container-highest overflow-hidden">
+<div class="absolute top-0 left-0 h-full bg-secondary-fixed rounded-full w-[17%] transition-all" id="epsilonTrack"></div>
+<input class="absolute inset-0 opacity-0 cursor-pointer w-full" id="epsilonInput" max="0.30" min="0.00" step="0.005" type="range" value="0.05"/>
+</div>
+<div class="flex justify-between font-code-telemetry text-[10px] text-on-surface-variant/70">
+<span>0.00 Pure Greedy</span>
+<span class="text-secondary-fixed">ε=0.05 (Exploiting)</span>
+<span>0.30 Random</span>
+</div>
+</div>
+<!-- Slider 3: Simulation Loop Tick Rate -->
+<div class="space-y-2 mb-5">
+<div class="flex items-center justify-between font-label-md text-label-md">
+<span class="text-on-surface-variant">Simulation Loop Sync</span>
+<span class="font-code-telemetry text-tertiary-fixed font-bold bg-surface-container-highest/60 px-2 py-0.5 rounded-md border border-white/5" id="tickRateBadge">60 Hz (16ms)</span>
+</div>
+<div class="relative w-full h-2 rounded-full bg-surface-container-highest">
+<div class="h-full bg-tertiary rounded-full w-[65%]"></div>
+</div>
+</div>
+<!-- Scenario Presets -->
+<div class="space-y-2 pt-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Quick Presets</span>
+<div class="grid grid-cols-1 gap-2">
+<button class="group w-full flex items-center justify-between px-3 py-2 rounded-xl bg-surface-container-high/60 hover:bg-surface-container-highest border border-white/5 hover:border-tertiary/40 transition-all text-left" id="presetNormal">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-[18px]">verified</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-medium">Standard Flow</span>
+<span class="font-code-telemetry text-[10px] text-on-surface-variant">Default 1.0x • Zero Hazards</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-tertiary transition-transform group-hover:translate-x-0.5 text-[18px]">arrow_forward</span>
+</button>
+<button class="group w-full flex items-center justify-between px-3 py-2 rounded-xl bg-surface-container-high/60 hover:bg-surface-container-highest border border-white/5 hover:border-primary/40 transition-all text-left" id="presetRush">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">commute</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-medium">Rush Hour Surge</span>
+<span class="font-code-telemetry text-[10px] text-on-surface-variant">Density 2.4x • Peak Demand</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-transform group-hover:translate-x-0.5 text-[18px]">arrow_forward</span>
+</button>
+<button class="group w-full flex items-center justify-between px-3 py-2 rounded-xl bg-surface-container-high/60 hover:bg-surface-container-highest border border-white/5 hover:border-error/40 transition-all text-left" id="presetBlockade">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-error text-[18px]">warning</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-medium">Arterial Blockade</span>
+<span class="font-code-telemetry text-[10px] text-on-surface-variant">Dual Roadblocks Divert</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-error transition-transform group-hover:translate-x-0.5 text-[18px]">arrow_forward</span>
+</button>
+<button class="group w-full flex items-center justify-between px-3 py-2 rounded-xl bg-surface-container-high/60 hover:bg-surface-container-highest border border-white/5 hover:border-secondary-fixed/40 transition-all text-left" id="presetHospital">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary-fixed text-[18px]">local_hospital</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-medium">Hospital Emergency Run</span>
+<span class="font-code-telemetry text-[10px] text-on-surface-variant">Node (0,3) ➔ (3,0) BFS Corridor</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-secondary-fixed transition-transform group-hover:translate-x-0.5 text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Footnote Telemetry API Endpoint Binding -->
+<div class="mt-4 pt-3 border-t border-white/5 space-y-1">
+<div class="flex items-center justify-between font-code-telemetry text-[10px] text-on-surface-variant">
+<span>CONTROL API:</span>
+<span class="text-primary font-mono">POST /control</span>
+</div>
+<div id="telemetryBindingJson" class="p-2 rounded-lg bg-surface-container-lowest/80 border border-white/5 font-code-telemetry text-[10px] text-primary-fixed truncate">
+  { "action": "spawn_emergency", "start": [0,0], "goal": [3,3] }
+</div>
+</div>
+</div>
+<!-- Agent State Quick Specs Card -->
+<div class="p-space-md rounded-[22px] bg-surface-container-low/60 backdrop-blur-2xl border border-white/10 shadow-md">
+<div class="flex items-center justify-between mb-3">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider font-semibold">Q-Table Snapshot</span>
+<span class="font-code-telemetry text-[10px] text-tertiary-fixed">16 Intersections</span>
+</div>
+<div class="grid grid-cols-2 gap-2 text-center">
+<div class="p-2 rounded-xl bg-surface-container-high/50 border border-white/5">
+<span class="font-code-telemetry text-[10px] text-on-surface-variant block">State Space |S|</span>
+<span class="font-headline-sm text-headline-sm font-semibold text-primary">2,048</span>
+</div>
+<div class="p-2 rounded-xl bg-surface-container-high/50 border border-white/5">
+<span class="font-code-telemetry text-[10px] text-on-surface-variant block">Actions |A|</span>
+<span class="font-headline-sm text-headline-sm font-semibold text-secondary-fixed">8 Phases</span>
+</div>
+<div class="p-2 rounded-xl bg-surface-container-high/50 border border-white/5">
+<span class="font-code-telemetry text-[10px] text-on-surface-variant block">Reward Discount γ</span>
+<span class="font-headline-sm text-headline-sm font-semibold text-tertiary-fixed">0.950</span>
+</div>
+<div class="p-2 rounded-xl bg-surface-container-high/50 border border-white/5">
+<span class="font-code-telemetry text-[10px] text-on-surface-variant block">Learning Rate α</span>
+<span class="font-headline-sm text-headline-sm font-semibold text-tertiary">0.120</span>
+</div>
+</div>
+</div>
+</div>
+<!-- CENTER COLUMN: Realistic 4x4 Grid Simulation Viewport & Dock (6 cols on desktop) -->
+<div class="col-span-12 lg:col-span-6 flex flex-col gap-4">
+<!-- Main Simulation Glass Viewport -->
+<div class="relative w-full rounded-[28px] bg-surface-container-lowest/80 backdrop-blur-3xl border border-white/15 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.7)] overflow-hidden flex flex-col">
+<!-- Viewport Top Bar -->
+<div class="flex items-center justify-between p-3.5 bg-surface-container-low/70 backdrop-blur-md border-b border-white/10 z-20 flex-wrap gap-2">
+<div class="flex items-center gap-2.5">
+<span class="relative flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
+</span>
+<div class="flex flex-col">
+<span id="viewportModeTitle" class="font-headline-sm text-headline-sm text-white font-semibold">Multi-Agent MARL Mesh</span>
+<span id="viewportSubhead" class="font-code-telemetry text-[11px] text-on-surface-variant">16 Intersections • 4x4 Grid • Zero Starvation</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+  <div id="fpsBadge" class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 font-code-telemetry text-[11px] font-bold shadow-[0_0_12px_rgba(16,185,129,0.2)]">
+    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+    <span id="fpsCounter">60 FPS (60Hz+)</span>
+  </div>
+</div>
+<!-- Mode Split Segmented Toggle -->
+<div class="flex items-center bg-surface-container-lowest/80 p-1 rounded-full border border-white/10">
+<button class="px-3 py-1 rounded-full font-label-sm text-label-sm bg-primary/20 text-primary-fixed border border-primary/30 shadow-[0_0_12px_rgba(10,132,255,0.3)] transition-all font-semibold flex items-center gap-1.5" id="modeAi">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+  AI Multi-Agent
+</button>
+<button class="px-3 py-1 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-all flex items-center gap-1.5" id="modeCompare">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+  Split Compare
+</button>
+<button class="px-3 py-1 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-all flex items-center gap-1.5" id="modeFixed">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+  Fixed 15t
+</button>
+</div>
+</div>
+<!-- 4x4 Roadway Canvas Simulation Area -->
+<div id="simContainer" class="relative w-full h-[450px] bg-[#0c0d12] overflow-hidden p-2 select-none flex items-center justify-center">
+  <!-- Radial Ambient Grid Illumination -->
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_45%_55%,rgba(10,132,255,0.12),transparent_70%)] pointer-events-none"></div>
+
+  <!-- Primary HiDPI Simulation Canvas -->
+  <div id="primaryCanvasWrapper" class="relative w-full h-full flex items-center justify-center">
+    <canvas id="modernCityCanvas" class="w-full h-full block rounded-2xl shadow-2xl relative z-10"></canvas>
+  </div>
+
+  <!-- Split Screen Comparison Overlay Canvas (Side-by-side) -->
+  <div id="compareWrapper" class="hidden absolute inset-0 w-full h-full p-2 bg-[#0a0a0e] z-20 gap-2" style="display:none">
+    <div class="relative w-1/2 h-full rounded-xl overflow-hidden border border-primary/30 flex flex-col">
+      <div class="absolute top-2 left-2 z-30 px-2 py-0.5 rounded-full bg-primary/20 backdrop-blur-md text-primary-fixed font-code-telemetry text-[10px] font-bold border border-primary/30">
+        AI MARL MESH
+      </div>
+      <canvas id="splitAiCanvas" class="w-full h-full block"></canvas>
+    </div>
+    <div class="relative w-1/2 h-full rounded-xl overflow-hidden border border-amber-500/30 flex flex-col">
+      <div class="absolute top-2 left-2 z-30 px-2 py-0.5 rounded-full bg-amber-500/20 backdrop-blur-md text-amber-300 font-code-telemetry text-[10px] font-bold border border-amber-500/30">
+        FIXED 15T BASELINE
+      </div>
+      <canvas id="splitBaseCanvas" class="w-full h-full block"></canvas>
+    </div>
+  </div>
+
+  <!-- Interactive Vehicle Tooltip -->
+  <div id="carTooltip" class="hidden pointer-events-none absolute z-30 px-3 py-1.5 rounded-xl bg-surface-container-high/95 backdrop-blur-md border border-white/20 text-white font-code-telemetry text-[11px] shadow-2xl"></div>
+
+  <!-- Interactive Node Inspector Drawer / Card -->
+  <div id="inspectorCard" class="hidden absolute top-3 right-3 z-30 w-64 p-3 rounded-2xl bg-surface-container-lowest/95 backdrop-blur-xl border border-primary/40 shadow-2xl text-on-surface flex flex-col gap-2">
+    <div class="flex items-center justify-between pb-1.5 border-b border-white/10">
+      <span id="inspectTitle" class="font-headline-sm text-sm text-primary-fixed font-bold">Node (0,0)</span>
+      <button onclick="document.getElementById('inspectorCard').classList.add('hidden')" class="text-on-surface-variant hover:text-white text-xs">✕</button>
+    </div>
+    <div class="grid grid-cols-2 gap-1 text-[11px] font-code-telemetry">
+      <div>Phase: <strong id="inspectPhase" class="text-tertiary">NS</strong></div>
+      <div>Timer: <strong id="inspectTimer">3/15</strong></div>
+      <div>Q(NS): <strong id="inspectQns" class="text-primary">0.00</strong></div>
+      <div>Q(EW): <strong id="inspectQew" class="text-secondary-fixed">0.00</strong></div>
+    </div>
+    <div class="text-[10px] text-on-surface-variant italic truncate" id="inspectReason">Policy: Optimal</div>
+    <div class="flex justify-between items-center text-[10px] font-code-telemetry pt-1 border-t border-white/5">
+      <span>Queues:</span>
+      <span id="inspectQueues" class="text-white">N:0 S:0 E:0 W:0</span>
+    </div>
+  </div>
+</div>
+<!-- Floating Apple visionOS Magnified Glass Dock Anchored at Bottom -->
+<div class="relative w-full px-4 py-2.5 bg-surface-container-low/85 backdrop-blur-3xl border-t border-white/10 flex items-center justify-between flex-wrap gap-2">
+<!-- Playback Controls -->
+<div class="flex items-center gap-1.5 bg-surface-container-highest/60 p-1.5 rounded-2xl border border-white/10 shadow-inner">
+<button class="w-9 h-9 rounded-xl bg-primary hover:bg-primary-container text-on-primary flex items-center justify-center transition-all shadow-[0_0_12px_rgba(10,132,255,0.4)]" id="dockPlayPause">
+<span class="material-symbols-outlined text-[20px]" id="playIcon">pause</span>
+</button>
+<button class="w-9 h-9 rounded-xl bg-surface-container-high/60 hover:bg-surface-container-highest text-on-surface flex items-center justify-center transition-all" id="dockStep" title="Step 1 Tick">
+<span class="material-symbols-outlined text-[18px]">skip_next</span>
+</button>
+<button class="w-9 h-9 rounded-xl bg-surface-container-high/60 hover:bg-surface-container-highest text-on-surface flex items-center justify-center transition-all" id="dockReset" title="Reset [R]">
+<span class="material-symbols-outlined text-[18px]">restart_alt</span>
+</button>
+</div>
+<!-- Speed Selector Segmented Pill -->
+<div class="flex items-center bg-surface-container-highest/60 p-1 rounded-2xl border border-white/10 font-code-telemetry text-[11px]">
+<button class="speed-btn px-2.5 py-1 rounded-xl text-on-surface-variant hover:text-white transition-all" data-speed="0.5">0.5x</button>
+<button class="speed-btn px-2.5 py-1 rounded-xl bg-surface-bright text-white font-bold border border-white/10 shadow-sm" data-speed="1.0">1.0x</button>
+<button class="speed-btn px-2.5 py-1 rounded-xl text-on-surface-variant hover:text-white transition-all" data-speed="2.0">2.0x</button>
+<button class="speed-btn px-2.5 py-1 rounded-xl text-on-surface-variant hover:text-white transition-all" data-speed="5.0">5.0x</button>
+</div>
+<!-- Interactive Action Triggers -->
+<div class="flex items-center gap-2 flex-wrap">
+<button class="px-3.5 py-2 rounded-xl bg-secondary-container/15 hover:bg-secondary-container/30 text-secondary-fixed border border-secondary/30 font-label-md text-label-md transition-all flex items-center gap-1.5 shadow-[0_0_16px_rgba(0,244,254,0.15)]" id="btnDispatchAmb">
+<span class="material-symbols-outlined text-[18px]">ambulance</span>
+<span>Dispatch AMB [E]</span>
+</button>
+<button class="px-3.5 py-2 rounded-xl bg-error-container/20 hover:bg-error-container/35 text-error border border-error/40 font-label-md text-label-md transition-all flex items-center gap-1.5" id="btnInjectHazard">
+<span class="material-symbols-outlined text-[18px]">block</span>
+<span>Barricade [I]</span>
+</button>
+<button class="px-3 py-2 rounded-xl bg-surface-container-high/60 hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface border border-white/5 font-label-md text-label-md transition-all" id="btnClearHazards">
+              Clear All
+            </button>
+</div>
+</div>
+</div>
+<!-- Realtime In-Grid Status Strip -->
+<div class="flex items-center justify-between px-4 py-2.5 rounded-2xl bg-surface-container-low/50 backdrop-blur-xl border border-white/5 font-code-telemetry text-code-telemetry text-on-surface-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary-fixed text-[16px]">verified</span>
+<span>Mesh Consensus: 100% Convergence</span>
+</div>
+<div class="flex items-center gap-4 flex-wrap">
+<span>Vehicles: <strong id="statusVehicles" class="text-on-surface font-semibold">48/64</strong></span>
+<span>Framerate: <strong id="statusFpsCounter" class="text-tertiary-fixed font-bold font-mono">60+ FPS (60Hz)</strong></span>
+<span>Collision Risk: <strong class="text-tertiary font-semibold">0.00%</strong></span>
+<span>Q-Table Updates: <strong class="text-primary font-semibold">1,428/s</strong></span>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: Environmental & Flow Performance Bento (3 cols) -->
+<div class="col-span-12 lg:col-span-3 flex flex-col gap-4">
+<!-- KPI Card 1: Average Queue Delay -->
+<div class="p-space-lg rounded-[26px] bg-surface-container-low/60 backdrop-blur-3xl border border-white/10 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.5)] relative overflow-hidden group">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider font-semibold">Average Queue Wait</span>
+<span id="kpiWaitDiff" class="px-2 py-0.5 rounded-full bg-tertiary-container/15 text-tertiary border border-tertiary/20 font-code-telemetry text-[11px] font-semibold">-72.3% vs 14.8t</span>
+</div>
+<div class="flex items-baseline gap-2 mb-2">
+<span id="kpiWaitVal" class="font-metric-xl text-metric-xl text-white font-extralight tracking-tight">4.1</span>
+<span class="font-body-md text-body-md text-on-surface-variant">ticks / veh</span>
+</div>
+<!-- Sparkline Curve -->
+<svg class="w-full h-11 text-tertiary" fill="none" viewbox="0 0 200 40">
+<path id="sparkWaitPath" d="M0,32 C30,30 60,26 90,16 C120,8 150,14 200,6" stroke="currentColor" stroke-linecap="round" stroke-width="2.5"></path>
+<path d="M0,32 C30,30 60,26 90,16 C120,8 150,14 200,6 L200,40 L0,40 Z" fill="currentColor" fill-opacity="0.08"></path>
+</svg>
+<span id="kpiWaitSub" class="font-code-telemetry text-[10px] text-on-surface-variant block mt-1">Baseline timer: 14.8 ticks • Net saving 10.7 ticks</span>
+</div>
+<!-- KPI Card 2: System Throughput -->
+<div class="p-space-lg rounded-[26px] bg-surface-container-low/60 backdrop-blur-3xl border border-white/10 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.5)] relative overflow-hidden group">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider font-semibold">System Throughput</span>
+<span id="kpiThruDiff" class="px-2 py-0.5 rounded-full bg-primary-container/20 text-primary-fixed border border-primary/30 font-code-telemetry text-[11px] font-semibold">+45.6%</span>
+</div>
+<div class="flex items-baseline gap-2 mb-2">
+<span id="kpiThruVal" class="font-metric-xl text-metric-xl text-white font-extralight tracking-tight">712</span>
+<span class="font-body-md text-body-md text-on-surface-variant">veh / hr</span>
+</div>
+<svg class="w-full h-11 text-primary" fill="none" viewbox="0 0 200 40">
+<path id="sparkThruPath" d="M0,34 C40,30 70,22 110,18 C140,14 170,8 200,4" stroke="currentColor" stroke-linecap="round" stroke-width="2.5"></path>
+<path d="M0,34 C40,30 70,22 110,18 C140,14 170,8 200,4 L200,40 L0,40 Z" fill="currentColor" fill-opacity="0.08"></path>
+</svg>
+<span id="kpiThruSub" class="font-code-telemetry text-[10px] text-on-surface-variant block mt-1">Baseline static: 489 veh/hr • +223 net clearance</span>
+</div>
+<!-- KPI Card 3: CO2 Emission Offset -->
+<div class="p-space-lg rounded-[26px] bg-surface-container-low/60 backdrop-blur-3xl border border-white/10 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.5)] relative overflow-hidden group">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider font-semibold">CO₂ Offset (EPA)</span>
+<span class="px-2 py-0.5 rounded-full bg-tertiary-container/20 text-tertiary-fixed border border-tertiary/30 font-code-telemetry text-[11px] font-semibold">Idle Model</span>
+</div>
+<div class="flex items-baseline gap-2 mb-2">
+<span id="kpiCo2Val" class="font-metric-xl text-metric-xl text-tertiary-fixed font-extralight tracking-tight">11.84</span>
+<span class="font-body-md text-body-md text-on-surface-variant">kg saved</span>
+</div>
+<svg class="w-full h-11 text-tertiary-fixed" fill="none" viewbox="0 0 200 40">
+<path id="sparkCo2Path" d="M0,30 C30,28 80,18 120,12 C160,8 180,5 200,2" stroke="currentColor" stroke-linecap="round" stroke-width="2.5"></path>
+<path d="M0,30 C30,28 80,18 120,12 C160,8 180,5 200,2 L200,40 L0,40 Z" fill="currentColor" fill-opacity="0.08"></path>
+</svg>
+<span id="kpiCo2Sub" class="font-code-telemetry text-[10px] text-on-surface-variant block mt-1">0.0022 kg CO₂/idle tick • Cumulative session</span>
+</div>
+<!-- KPI Card 4: Fuel Conserved -->
+<div class="p-space-lg rounded-[26px] bg-surface-container-low/60 backdrop-blur-3xl border border-white/10 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.5)] relative overflow-hidden group">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider font-semibold">Fuel Conserved</span>
+<span class="px-2 py-0.5 rounded-full bg-secondary-container/15 text-secondary-fixed border border-secondary/25 font-code-telemetry text-[11px] font-semibold">Stoichiometric</span>
+</div>
+<div class="flex items-baseline gap-2 mb-2">
+<span id="kpiFuelVal" class="font-metric-xl text-metric-xl text-secondary font-extralight tracking-tight">4.97</span>
+<span class="font-body-md text-body-md text-on-surface-variant">L gasoline</span>
+</div>
+<svg class="w-full h-11 text-secondary-fixed" fill="none" viewbox="0 0 200 40">
+<path id="sparkFuelPath" d="M0,32 C40,28 80,20 120,15 C160,10 180,6 200,3" stroke="currentColor" stroke-linecap="round" stroke-width="2.5"></path>
+<path d="M0,32 C40,28 80,20 120,15 C160,10 180,6 200,3 L200,40 L0,40 Z" fill="currentColor" fill-opacity="0.08"></path>
+</svg>
+<span id="kpiFuelSub" class="font-code-telemetry text-[10px] text-on-surface-variant block mt-1">Ratio: 0.42 L/kg CO₂ • $7.21 Direct Savings</span>
+</div>
+</div>
+</div>
+<!-- Bottom Section: Live Pub-Sub Agent Event Stream & 16-Node Congestion Matrix -->
+<div class="grid grid-cols-12 gap-gutter-desktop mt-6">
+<!-- Live Agent Message Feed (Pub-Sub Bus) -->
+<div class="col-span-12 lg:col-span-7 p-space-lg rounded-[26px] bg-surface-container-low/60 backdrop-blur-3xl border border-white/10 shadow-[0_24px_48px_-12px_rgba(0,0,0,0.5)] flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-3 mb-4 border-b border-white/5 flex-wrap gap-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary-fixed text-[20px]">rss_feed</span>
+<span class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider font-semibold">Live Decoupled Message Bus</span>
+<span class="font-code-telemetry text-[10px] text-on-surface-variant bg-surface-container-high px-2 py-0.5 rounded-full">ZeroMQ / IPC</span>
+</div>
+<!-- Feed Filters -->
+<div class="flex items-center gap-1 bg-surface-container-highest/60 p-1 rounded-full border border-white/5">
+<button class="msg-filter px-2.5 py-0.5 rounded-full font-code-telemetry text-[11px] bg-surface-bright text-white font-medium" data-filter="all">All</button>
+<button class="msg-filter px-2.5 py-0.5 rounded-full font-code-telemetry text-[11px] text-on-surface-variant hover:text-white" data-filter="coordinator">Coordinator</button>
+<button class="msg-filter px-2.5 py-0.5 rounded-full font-code-telemetry text-[11px] text-on-surface-variant hover:text-white" data-filter="emergency">Emergency BFS</button>
+<button class="msg-filter px-2.5 py-0.5 rounded-full font-code-telemetry text-[11px] text-on-surface-variant hover:text-white" data-filter="incident">Incidents</button>
+</div>
+</div>
+<!-- Scrolling Event Log List -->
+<div class="space-y-2 max-h-56 overflow-y-auto pr-2" id="logStream">
+<div class="log-item p-2.5 rounded-xl bg-surface-container-high/40 hover:bg-surface-container-high/70 border-l-2 border-secondary-fixed flex items-center justify-between gap-3 transition-colors" data-type="emergency">
+<div class="flex items-center gap-2.5 min-w-0">
+<span class="font-code-telemetry text-[11px] text-secondary-fixed font-mono">14:02:18.420</span>
+<span class="px-2 py-0.5 rounded bg-secondary-container/20 text-secondary-fixed font-code-telemetry text-[10px] font-semibold">BFS WAVE</span>
+<span class="font-body-md text-body-md text-on-surface truncate">Preemption armed corridor: (0,3) ➔ (1,3) ➔ (1,2) ➔ (2,2) ➔ (2,1) for AMB-04</span>
+</div>
+<span class="font-code-telemetry text-[11px] text-tertiary shrink-0">RTT 1.8ms</span>
+</div>
+<div class="log-item p-2.5 rounded-xl bg-surface-container-high/40 hover:bg-surface-container-high/70 border-l-2 border-error flex items-center justify-between gap-3 transition-colors" data-type="incident">
+<div class="flex items-center gap-2.5 min-w-0">
+<span class="font-code-telemetry text-[11px] text-error font-mono">14:02:17.912</span>
+<span class="px-2 py-0.5 rounded bg-error-container/30 text-error font-code-telemetry text-[10px] font-semibold">INCIDENT</span>
+<span class="font-body-md text-body-md text-on-surface truncate">Segment (2,1) East capacity set to 0. Barricade routing triggered.</span>
+</div>
+<span class="font-code-telemetry text-[11px] text-on-surface-variant shrink-0">NODE 2,1</span>
+</div>
+<div class="log-item p-2.5 rounded-xl bg-surface-container-high/40 hover:bg-surface-container-high/70 border-l-2 border-primary flex items-center justify-between gap-3 transition-colors" data-type="coordinator">
+<div class="flex items-center gap-2.5 min-w-0">
+<span class="font-code-telemetry text-[11px] text-primary-fixed font-mono">14:02:17.204</span>
+<span class="px-2 py-0.5 rounded bg-primary-container/20 text-primary-fixed font-code-telemetry text-[10px] font-semibold">BELLMAN</span>
+<span class="font-body-md text-body-md text-on-surface truncate">Sub-grid 1 Q-consensus updated. New policy argmax_a Q(s,a) phase #3</span>
+</div>
+<span class="font-code-telemetry text-[11px] text-on-surface-variant shrink-0">ALL 16 AGENTS</span>
+</div>
+<div class="log-item p-2.5 rounded-xl bg-surface-container-high/40 hover:bg-surface-container-high/70 border-l-2 border-tertiary flex items-center justify-between gap-3 transition-colors" data-type="coordinator">
+<div class="flex items-center gap-2.5 min-w-0">
+<span class="font-code-telemetry text-[11px] text-tertiary-fixed font-mono">14:02:16.890</span>
+<span class="px-2 py-0.5 rounded bg-tertiary-container/20 text-tertiary font-code-telemetry text-[10px] font-semibold">THROUGHPUT</span>
+<span class="font-body-md text-body-md text-on-surface truncate">Intersection (1,1) cleared 8 waiting vehicles in 14 ticks. Zero starvation.</span>
+</div>
+<span class="font-code-telemetry text-[11px] text-tertiary shrink-0">+14.2%</span>
+</div>
+</div>
+</div>
+<!-- Developer Data Footnotes -->
+<div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between font-code-telemetry text-[10px] text-on-surface-variant">
+<span>POLL: <code class="text-primary font-mono">GET /state</code> (interval: 50ms)</span>
+<span>METRICS: <code class="text-secondary-fixed font-mono">GET /metrics</code> (Prometheus export ready)</span>
+<span class="text-tertiary">Active Workers: 4 Tokio Cores</span>
+</div>
+</div>
+<!-- Spatial Corridor 16-Node Congestion Matrix -->
+<div class="col-span-12 lg:col-span-5 p-space-lg rounded-[26px] bg-surface-container-low/60 backdrop-blur-3xl border border-white/10 shadow-[0_24px_48px_-12px_rgba(0,0,0,0.5)] flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-3 mb-3 border-b border-white/5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">grid_4x4</span>
+<span class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider font-semibold">16-Node Congestion Matrix</span>
+</div>
+<span class="font-code-telemetry text-[11px] text-on-surface-variant">Queue Depth Status</span>
+</div>
+<!-- 4x4 Mini Matrix Grid -->
+<div id="congestionMatrix" class="grid grid-cols-4 gap-2">
+  <!-- Populated dynamically by modern_app.js from live simulation /state -->
+</div>
+</div>
+<!-- Legend Footer -->
+<div class="flex items-center justify-between pt-3 border-t border-white/5 font-code-telemetry text-[11px] text-on-surface-variant">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span>Free (&lt;3)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-amber-400"></span>
+<span>Moderate (3-5)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span>Critical (&gt;5)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary-fixed"></span>
+<span>Preempted</span>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ========================================================
+     PAGE 2: AGENT HIERARCHY & NEURAL CONSENSUS MESH
+     ======================================================== -->
+<section id="page-agent-hierarchy" class="page-view hidden flex flex-col w-full">
+  <!-- Hero Header -->
+  <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8 pt-2">
+    <div>
+      <div class="flex items-center gap-2 mb-2">
+        <span class="px-2.5 py-0.5 rounded-full bg-primary/10 border border-primary/20 font-code-telemetry text-[11px] text-primary uppercase tracking-widest font-semibold">Decentralized Mesh Architecture</span>
+        <span class="text-outline-variant font-code-telemetry text-[12px]">•</span>
+        <span class="font-code-telemetry text-[11px] text-on-surface-variant tracking-wider uppercase">Zero-Copy Pub-Sub Bus</span>
+      </div>
+      <h1 class="font-display-hero text-display-hero text-white tracking-tight flex items-baseline gap-3 flex-wrap">
+        <span>Multi-Agent</span>
+        <span class="bg-gradient-to-r from-primary-fixed via-secondary-fixed to-primary bg-clip-text text-transparent font-medium">Hierarchy.</span>
+      </h1>
+      <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mt-2 leading-relaxed">
+        Heterogeneous consensus separating macro-network coordination, dynamic emergency green wave overrides, and autonomous tabular Q-learning micro-controllers across 16 grid junctions.
+      </p>
+    </div>
+    <div class="flex items-center gap-3 flex-wrap">
+      <div class="px-4 py-3 rounded-2xl bg-surface-container-low/70 backdrop-blur-2xl border border-white/10 shadow-lg flex items-center gap-3">
+        <span class="w-2.5 h-2.5 rounded-full bg-tertiary animate-pulse"></span>
+        <div class="flex flex-col">
+          <span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Mesh Consensus</span>
+          <span class="font-headline-sm text-headline-sm font-bold text-tertiary-fixed">16/16 Synced</span>
+        </div>
+      </div>
+      <div class="px-4 py-3 rounded-2xl bg-surface-container-low/70 backdrop-blur-2xl border border-white/10 shadow-lg flex items-center gap-3">
+        <span class="material-symbols-outlined text-secondary-fixed text-[20px]">bolt</span>
+        <div class="flex flex-col">
+          <span class="font-label-sm text-label-sm text-on-surface-variant uppercase">IPC Latency</span>
+          <span class="font-headline-sm text-headline-sm font-bold text-secondary-fixed">1.8 ms</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- The 3 Core Authority Tiers Bento -->
+  <div class="grid grid-cols-12 gap-gutter-desktop mb-8">
+    <!-- Tier 1: Coordinator Agent -->
+    <div class="col-span-12 lg:col-span-4 p-space-lg rounded-[26px] bg-surface-container-low/60 backdrop-blur-3xl border border-white/10 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between pb-3 mb-4 border-b border-white/5">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-primary-container/20 border border-primary/30 flex items-center justify-center text-primary">
+              <span class="material-symbols-outlined text-[20px]">hub</span>
+            </div>
+            <div>
+              <h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Coordinator Agent</h3>
+              <span class="font-code-telemetry text-[10px] text-primary uppercase">Tier 1: Global Policy</span>
+            </div>
+          </div>
+          <span id="tier1Status" class="px-2 py-0.5 rounded-full bg-tertiary-container/20 border border-tertiary/30 text-tertiary-fixed font-code-telemetry text-[10px] font-semibold">ACTIVE</span>
+        </div>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-4 leading-relaxed">
+          Aggregates local queue states, monitors network-wide variance, orchestrates gossip synchronizations, and schedules exploration decay across all sub-agents.
+        </p>
+        <div class="space-y-2.5 font-code-telemetry text-[11px]">
+          <div class="flex justify-between p-2 rounded-xl bg-surface-container-high/40 border border-white/5">
+            <span class="text-on-surface-variant">Sync Frequency:</span>
+            <span class="text-on-surface font-mono">20 Hz (50ms interval)</span>
+          </div>
+          <div class="flex justify-between p-2 rounded-xl bg-surface-container-high/40 border border-white/5">
+            <span class="text-on-surface-variant">Policy Mechanism:</span>
+            <span class="text-primary-fixed font-mono">Decentralized Gossip Bus</span>
+          </div>
+          <div class="flex justify-between p-2 rounded-xl bg-surface-container-high/40 border border-white/5">
+            <span class="text-on-surface-variant">Starvation Guard:</span>
+            <span class="text-tertiary-fixed font-mono">Max 15t Upper Bound</span>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-[11px] font-code-telemetry text-on-surface-variant">
+        <span>Channel: <code class="text-primary">/messages/coordinator</code></span>
+        <span class="text-tertiary">Zero Bottleneck</span>
+      </div>
+    </div>
+
+    <!-- Tier 2: Emergency Preemption Agent -->
+    <div class="col-span-12 lg:col-span-4 p-space-lg rounded-[26px] bg-surface-container-low/60 backdrop-blur-3xl border border-white/10 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between pb-3 mb-4 border-b border-white/5">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-secondary-container/20 border border-secondary/30 flex items-center justify-center text-secondary-fixed">
+              <span class="material-symbols-outlined text-[20px]">e911_emergency</span>
+            </div>
+            <div>
+              <h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Emergency Agent</h3>
+              <span class="font-code-telemetry text-[10px] text-secondary-fixed uppercase">Tier 2: Priority Override</span>
+            </div>
+          </div>
+          <span id="tier2Status" class="px-2 py-0.5 rounded-full bg-secondary-container/20 border border-secondary/30 text-secondary-fixed font-code-telemetry text-[10px] font-semibold">CORRIDOR WATCH</span>
+        </div>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-4 leading-relaxed">
+          Executes deterministic Breadth-First-Search (BFS) over the intersection planar graph, locks green corridors along the active transit path, and restores normal operation upon arrival.
+        </p>
+        <div class="space-y-2.5 font-code-telemetry text-[11px]">
+          <div class="flex justify-between p-2 rounded-xl bg-surface-container-high/40 border border-white/5">
+            <span class="text-on-surface-variant">Pathfinding Solver:</span>
+            <span class="text-secondary-fixed font-mono">BFS Adjacency Graph</span>
+          </div>
+          <div class="flex justify-between p-2 rounded-xl bg-surface-container-high/40 border border-white/5">
+            <span class="text-on-surface-variant">Preemption Delay:</span>
+            <span class="text-tertiary-fixed font-mono">0.0 ticks (Zero Wait)</span>
+          </div>
+          <div class="flex justify-between p-2 rounded-xl bg-surface-container-high/40 border border-white/5">
+            <span class="text-on-surface-variant">Emergency Speedup:</span>
+            <span class="text-secondary-fixed font-mono">+18.2 ticks vs Baseline</span>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-[11px] font-code-telemetry text-on-surface-variant">
+        <span>Channel: <code class="text-secondary-fixed">/messages/emergency</code></span>
+        <span class="text-secondary-fixed">Deterministic</span>
+      </div>
+    </div>
+
+    <!-- Tier 3: Incident Mitigation Agent -->
+    <div class="col-span-12 lg:col-span-4 p-space-lg rounded-[26px] bg-surface-container-low/60 backdrop-blur-3xl border border-white/10 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between pb-3 mb-4 border-b border-white/5">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-error-container/20 border border-error/30 flex items-center justify-center text-error">
+              <span class="material-symbols-outlined text-[20px]">warning</span>
+            </div>
+            <div>
+              <h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Incident Agent</h3>
+              <span class="font-code-telemetry text-[10px] text-error uppercase">Tier 3: Hazard Mitigation</span>
+            </div>
+          </div>
+          <span id="tier3Status" class="px-2 py-0.5 rounded-full bg-tertiary-container/20 border border-tertiary/30 text-tertiary-fixed font-code-telemetry text-[10px] font-semibold">CLEAR</span>
+        </div>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-4 leading-relaxed">
+          Detects road blockades and physical incidents, drops downstream segment capacity to 0, and informs upstream Q-agents to divert traffic onto adjacent parallel arterials.
+        </p>
+        <div class="space-y-2.5 font-code-telemetry text-[11px]">
+          <div class="flex justify-between p-2 rounded-xl bg-surface-container-high/40 border border-white/5">
+            <span class="text-on-surface-variant">Diversion Latency:</span>
+            <span class="text-tertiary-fixed font-mono">&lt; 12 ms</span>
+          </div>
+          <div class="flex justify-between p-2 rounded-xl bg-surface-container-high/40 border border-white/5">
+            <span class="text-on-surface-variant">Rerouting Policy:</span>
+            <span class="text-error font-mono">Dynamic Barricade Bias</span>
+          </div>
+          <div class="flex justify-between p-2 rounded-xl bg-surface-container-high/40 border border-white/5">
+            <span class="text-on-surface-variant">Active Barricades:</span>
+            <span id="tier3ActiveCount" class="text-on-surface font-mono">0 Segments</span>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-[11px] font-code-telemetry text-on-surface-variant">
+        <span>Channel: <code class="text-error">/messages/incident</code></span>
+        <span class="text-tertiary">Real-Time</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tier 4: 16 Decentralized Intersection Agents Matrix -->
+  <div class="p-space-lg rounded-[26px] bg-surface-container-low/60 backdrop-blur-3xl border border-white/10 shadow-[0_24px_48px_-12px_rgba(0,0,0,0.5)] mb-8">
+    <div class="flex items-center justify-between pb-3 mb-6 border-b border-white/5 flex-wrap gap-3">
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary text-[20px]">grain</span>
+          <h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Tier 4: 16 Autonomous Intersection Q-Agents</h2>
+        </div>
+        <p class="font-body-md text-body-md text-on-surface-variant mt-0.5">
+          Each node operates an independent Tabular Q-Learning decision engine with local state observation $[q_N, q_S, q_E, q_W]$.
+        </p>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="font-code-telemetry text-[11px] text-tertiary-fixed px-3 py-1 rounded-full bg-tertiary-container/15 border border-tertiary/25">16 Tabular Models Synced</span>
+      </div>
+    </div>
+
+    <!-- 4x4 Grid of Interactive Agent Cards -->
+    <div id="hierarchyAgentGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+      <!-- Populated dynamically by modern_app.js -->
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================
+     PAGE 3: TELEMETRY & COMPARATIVE ANALYTICS
+     ======================================================== -->
+<section id="page-telemetry-analytics" class="page-view hidden flex flex-col w-full">
+  <!-- Hero Header -->
+  <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8 pt-2">
+    <div>
+      <div class="flex items-center gap-2 mb-2">
+        <span class="px-2.5 py-0.5 rounded-full bg-primary/10 border border-primary/20 font-code-telemetry text-[11px] text-primary uppercase tracking-widest font-semibold">Telemetry &amp; Benchmarks</span>
+        <span class="text-outline-variant font-code-telemetry text-[12px]">•</span>
+        <span class="font-code-telemetry text-[11px] text-on-surface-variant tracking-wider uppercase">High-Frequency Time-Series</span>
+      </div>
+      <h1 class="font-display-hero text-display-hero text-white tracking-tight flex items-baseline gap-3 flex-wrap">
+        <span>Urban</span>
+        <span class="bg-gradient-to-r from-primary-fixed via-secondary-fixed to-primary bg-clip-text text-transparent font-medium">Performance.</span>
+      </h1>
+      <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mt-2 leading-relaxed">
+        Empirical comparison of 16-agent reinforcement learning against municipal fixed-cycle traffic timers across queue delay, capacity flow, emissions, and Bellman TD loss.
+      </p>
+    </div>
+    <div class="flex items-center gap-3">
+      <a href="/export/csv" class="flex items-center gap-2 px-4 py-3 rounded-2xl bg-primary-container/20 hover:bg-primary-container/35 text-primary-fixed border border-primary/30 font-label-md transition-all shadow-lg">
+        <span class="material-symbols-outlined text-[18px]">download</span>
+        <span class="font-semibold">Export Full CSV Telemetry</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Key Metrics Row -->
+  <div class="grid grid-cols-12 gap-gutter-desktop mb-8">
+    <div class="col-span-12 sm:col-span-6 lg:col-span-3 p-space-md rounded-2xl bg-surface-container-low/70 backdrop-blur-2xl border border-white/10 shadow-lg flex items-center gap-4">
+      <div class="w-12 h-12 rounded-xl bg-tertiary-container/20 border border-tertiary/30 flex items-center justify-center text-tertiary">
+        <span class="material-symbols-outlined text-[24px]">timer_10</span>
+      </div>
+      <div class="flex flex-col">
+        <span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Mean Queue Delay</span>
+        <div class="flex items-baseline gap-2">
+          <span id="pageAnalyticsWait" class="font-headline-md text-headline-md font-bold text-tertiary-fixed">6.4t</span>
+          <span class="font-label-sm text-[11px] text-tertiary font-semibold">-72.3% vs Fixed</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-span-12 sm:col-span-6 lg:col-span-3 p-space-md rounded-2xl bg-surface-container-low/70 backdrop-blur-2xl border border-white/10 shadow-lg flex items-center gap-4">
+      <div class="w-12 h-12 rounded-xl bg-primary-container/20 border border-primary/30 flex items-center justify-center text-primary">
+        <span class="material-symbols-outlined text-[24px]">speed</span>
+      </div>
+      <div class="flex flex-col">
+        <span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Hourly Throughput</span>
+        <div class="flex items-baseline gap-2">
+          <span id="pageAnalyticsThru" class="font-headline-md text-headline-md font-bold text-primary-fixed">54,200</span>
+          <span class="font-label-sm text-[11px] text-primary font-semibold">+45.6%</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-span-12 sm:col-span-6 lg:col-span-3 p-space-md rounded-2xl bg-surface-container-low/70 backdrop-blur-2xl border border-white/10 shadow-lg flex items-center gap-4">
+      <div class="w-12 h-12 rounded-xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+        <span class="material-symbols-outlined text-[24px]">eco</span>
+      </div>
+      <div class="flex flex-col">
+        <span class="font-label-sm text-label-sm text-on-surface-variant uppercase">CO₂ Idle Offset</span>
+        <div class="flex items-baseline gap-2">
+          <span id="pageAnalyticsCo2" class="font-headline-md text-headline-md font-bold text-emerald-400">395.8 kg</span>
+          <span class="font-label-sm text-[11px] text-emerald-400 font-semibold">EPA Model</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-span-12 sm:col-span-6 lg:col-span-3 p-space-md rounded-2xl bg-surface-container-low/70 backdrop-blur-2xl border border-white/10 shadow-lg flex items-center gap-4">
+      <div class="w-12 h-12 rounded-xl bg-secondary-container/20 border border-secondary/30 flex items-center justify-center text-secondary-fixed">
+        <span class="material-symbols-outlined text-[24px]">local_gas_station</span>
+      </div>
+      <div class="flex flex-col">
+        <span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Fuel Conserved</span>
+        <div class="flex items-baseline gap-2">
+          <span id="pageAnalyticsFuel" class="font-headline-md text-headline-md font-bold text-secondary-fixed">166.2 L</span>
+          <span class="font-label-sm text-[11px] text-secondary-fixed font-semibold">$345 Saved</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive Charts Bento -->
+  <div class="grid grid-cols-12 gap-gutter-desktop mb-8">
+    <!-- Chart 1: Queue Delay Timeline (Full Width) -->
+    <div class="col-span-12 p-space-lg rounded-[26px] bg-surface-container-low/60 backdrop-blur-3xl border border-white/10 shadow-lg">
+      <div class="flex items-center justify-between pb-3 mb-4 border-b border-white/5 flex-wrap gap-2">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary text-[20px]">show_chart</span>
+          <h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Average Queue Wait Time: Multi-Agent RL vs Fixed 15t Baseline</h3>
+        </div>
+        <div class="flex items-center gap-4 font-code-telemetry text-[11px]">
+          <div class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-[#00f4fe]"></span><span class="text-on-surface">Multi-Agent RL</span></div>
+          <div class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-[#ff3366] border-dashed border-t"></span><span class="text-on-surface-variant">Fixed 15t Timer</span></div>
+        </div>
+      </div>
+      <div class="w-full h-72">
+        <canvas id="pageWaitChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Chart 2: Throughput Capacity Flow -->
+    <div class="col-span-12 lg:col-span-6 p-space-lg rounded-[26px] bg-surface-container-low/60 backdrop-blur-3xl border border-white/10 shadow-lg">
+      <div class="flex items-center justify-between pb-3 mb-4 border-b border-white/5">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-tertiary text-[20px]">stacked_line_chart</span>
+          <h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Throughput &amp; Vehicle Flow (Cumulative)</h3>
+        </div>
+      </div>
+      <div class="w-full h-64">
+        <canvas id="pageThruChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Chart 3: 16-Node Congestion Distribution (Bar) -->
+    <div class="col-span-12 lg:col-span-6 p-space-lg rounded-[26px] bg-surface-container-low/60 backdrop-blur-3xl border border-white/10 shadow-lg">
+      <div class="flex items-center justify-between pb-3 mb-4 border-b border-white/5">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary-fixed text-[20px]">bar_chart</span>
+          <h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">16-Intersection Congestion Distribution</h3>
+        </div>
+      </div>
+      <div class="w-full h-64">
+        <canvas id="pageBarChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Chart 4: Environmental Emissions Offset -->
+    <div class="col-span-12 lg:col-span-6 p-space-lg rounded-[26px] bg-surface-container-low/60 backdrop-blur-3xl border border-white/10 shadow-lg">
+      <div class="flex items-center justify-between pb-3 mb-4 border-b border-white/5">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-emerald-400 text-[20px]">co2</span>
+          <h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">EPA Idle Emissions Offset (CO₂ kg)</h3>
+        </div>
+      </div>
+      <div class="w-full h-64">
+        <canvas id="pageEnvChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Chart 5: Q-Learning Loss Convergence -->
+    <div class="col-span-12 lg:col-span-6 p-space-lg rounded-[26px] bg-surface-container-low/60 backdrop-blur-3xl border border-white/10 shadow-lg">
+      <div class="flex items-center justify-between pb-3 mb-4 border-b border-white/5">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-amber-400 text-[20px]">trending_down</span>
+          <h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Bellman TD Error &amp; Policy Convergence</h3>
+        </div>
+      </div>
+      <div class="w-full h-64">
+        <canvas id="pageLossChart"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================
+     PAGE 4: INCIDENTS & EMERGENCY CORRIDORS
+     ======================================================== -->
+<section id="page-incidents-corridors" class="page-view hidden flex flex-col w-full">
+  <!-- Hero Header -->
+  <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8 pt-2">
+    <div>
+      <div class="flex items-center gap-2 mb-2">
+        <span class="px-2.5 py-0.5 rounded-full bg-secondary/10 border border-secondary/20 font-code-telemetry text-[11px] text-secondary-fixed uppercase tracking-widest font-semibold">Operations Command</span>
+        <span class="text-outline-variant font-code-telemetry text-[12px]">•</span>
+        <span class="font-code-telemetry text-[11px] text-on-surface-variant tracking-wider uppercase">Priority Dispatch Console</span>
+      </div>
+      <h1 class="font-display-hero text-display-hero text-white tracking-tight flex items-baseline gap-3 flex-wrap">
+        <span>Incidents &amp;</span>
+        <span class="bg-gradient-to-r from-secondary-fixed via-primary-fixed to-secondary-fixed bg-clip-text text-transparent font-medium">Corridors.</span>
+      </h1>
+      <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mt-2 leading-relaxed">
+        Mission-control operations for emergency vehicle routing, automated BFS green wave preemption, and active arterial hazard management.
+      </p>
+    </div>
+    <div class="flex items-center gap-3">
+      <button id="btnClearAllHazardsPage" class="flex items-center gap-2 px-4 py-3 rounded-2xl bg-error-container/20 hover:bg-error-container/35 text-error border border-error/30 font-label-md transition-all shadow-lg" type="button">
+        <span class="material-symbols-outlined text-[18px]">clear_all</span>
+        <span class="font-semibold">Clear All Road Hazards</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Interactive Operations Bento -->
+  <div class="grid grid-cols-12 gap-gutter-desktop mb-8">
+    <!-- Left: BFS Corridor Dispatcher Console -->
+    <div class="col-span-12 lg:col-span-6 p-space-lg rounded-[26px] bg-surface-container-low/60 backdrop-blur-3xl border border-white/10 shadow-lg flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between pb-3 mb-4 border-b border-white/5">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-secondary-fixed text-[20px]">e911_emergency</span>
+            <h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Priority Ambulance Corridor Dispatcher</h3>
+          </div>
+          <span class="font-code-telemetry text-[11px] text-secondary-fixed px-2 py-0.5 rounded-full bg-secondary-container/15 border border-secondary/25">DYNAMIC BFS</span>
+        </div>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-5">
+          Select origin and destination nodes to calculate the optimal green wave corridor with automatic signal phase preemption:
+        </p>
+
+        <!-- Node Selectors -->
+        <div class="grid grid-cols-2 gap-4 mb-5">
+          <div class="space-y-1.5">
+            <label class="font-label-sm text-label-sm text-on-surface-variant uppercase">Start Intersection</label>
+            <select id="dispatchStartNode" class="w-full p-2.5 rounded-xl bg-surface-container-high/80 border border-white/10 text-on-surface font-code-telemetry text-sm focus:outline-none focus:border-secondary-fixed">
+              <option value="0,0">Node (0,0) - North-West</option>
+              <option value="0,3">Node (0,3) - North-East</option>
+              <option value="3,0">Node (3,0) - South-West</option>
+              <option value="3,3">Node (3,3) - South-East</option>
+              <option value="1,1">Node (1,1) - Central Hub</option>
+              <option value="2,2">Node (2,2) - Central Hub</option>
+            </select>
+          </div>
+          <div class="space-y-1.5">
+            <label class="font-label-sm text-label-sm text-on-surface-variant uppercase">Goal Intersection</label>
+            <select id="dispatchGoalNode" class="w-full p-2.5 rounded-xl bg-surface-container-high/80 border border-white/10 text-on-surface font-code-telemetry text-sm focus:outline-none focus:border-secondary-fixed">
+              <option value="3,3">Node (3,3) - South-East</option>
+              <option value="0,0">Node (0,0) - North-West</option>
+              <option value="0,3">Node (0,3) - North-East</option>
+              <option value="3,0">Node (3,0) - South-West</option>
+              <option value="2,1">Node (2,1) - Industrial</option>
+              <option value="1,2">Node (1,2) - Commercial</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Calculated Route Visualizer -->
+        <div class="p-3.5 rounded-2xl bg-surface-container-high/40 border border-white/5 mb-5 space-y-2">
+          <span class="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-wider block">Computed BFS Route:</span>
+          <div id="corridorRoutePath" class="flex items-center gap-2 flex-wrap font-code-telemetry text-sm text-secondary-fixed font-semibold">
+            <span class="px-2 py-1 rounded-lg bg-surface-container-highest border border-white/10">I(0,0)</span>
+            <span class="text-on-surface-variant">➔</span>
+            <span class="px-2 py-1 rounded-lg bg-surface-container-highest border border-white/10">I(1,0)</span>
+            <span class="text-on-surface-variant">➔</span>
+            <span class="px-2 py-1 rounded-lg bg-surface-container-highest border border-white/10">I(2,0)</span>
+            <span class="text-on-surface-variant">➔</span>
+            <span class="px-2 py-1 rounded-lg bg-surface-container-highest border border-white/10">I(3,0)</span>
+            <span class="text-on-surface-variant">➔</span>
+            <span class="px-2 py-1 rounded-lg bg-secondary-container/20 text-secondary-fixed border border-secondary/30">I(3,3)</span>
+          </div>
+          <div class="flex items-center justify-between pt-2 border-t border-white/5 font-code-telemetry text-[11px] text-on-surface-variant">
+            <span>Preemption Mode: <strong class="text-secondary-fixed">Zero-Wait Green Wave</strong></span>
+            <span>Estimated Speedup: <strong class="text-tertiary-fixed">+18.2 ticks</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <button id="btnDispatchAmbulanceCustom" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-secondary-container/30 to-primary-container/30 hover:from-secondary-container/45 hover:to-primary-container/45 border border-secondary/40 text-secondary-fixed font-headline-sm font-semibold flex items-center justify-center gap-2 transition-all shadow-[0_0_20px_rgba(0,244,254,0.15)]" type="button">
+        <span class="material-symbols-outlined text-[20px]">local_hospital</span>
+        <span>Dispatch Priority Ambulance Now</span>
+      </button>
+    </div>
+
+    <!-- Right: Road Hazard Barricade Management -->
+    <div class="col-span-12 lg:col-span-6 p-space-lg rounded-[26px] bg-surface-container-low/60 backdrop-blur-3xl border border-white/10 shadow-lg flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between pb-3 mb-4 border-b border-white/5">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-error text-[20px]">car_crash</span>
+            <h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Road Hazard &amp; Blockade Controller</h3>
+          </div>
+          <span class="font-code-telemetry text-[11px] text-error px-2 py-0.5 rounded-full bg-error-container/15 border border-error/25">DYNAMIC REROUTE</span>
+        </div>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-5">
+          Simulate arterial incidents by deploying barricades. Downstream segment capacity instantly drops to 0, activating upstream agent diversion:
+        </p>
+
+        <!-- Segment Deployer Inputs -->
+        <div class="grid grid-cols-3 gap-3 mb-5">
+          <div class="space-y-1.5">
+            <label class="font-label-sm text-label-sm text-on-surface-variant uppercase">Row (0-3)</label>
+            <input id="barricadeRow" type="number" min="0" max="3" value="1" class="w-full p-2.5 rounded-xl bg-surface-container-high/80 border border-white/10 text-on-surface font-code-telemetry text-sm focus:outline-none focus:border-error"/>
+          </div>
+          <div class="space-y-1.5">
+            <label class="font-label-sm text-label-sm text-on-surface-variant uppercase">Col (0-3)</label>
+            <input id="barricadeCol" type="number" min="0" max="3" value="2" class="w-full p-2.5 rounded-xl bg-surface-container-high/80 border border-white/10 text-on-surface font-code-telemetry text-sm focus:outline-none focus:border-error"/>
+          </div>
+          <div class="space-y-1.5">
+            <label class="font-label-sm text-label-sm text-on-surface-variant uppercase">Approach</label>
+            <select id="barricadeDir" class="w-full p-2.5 rounded-xl bg-surface-container-high/80 border border-white/10 text-on-surface font-code-telemetry text-sm focus:outline-none focus:border-error">
+              <option value="N">North (N)</option>
+              <option value="S">South (S)</option>
+              <option value="E" selected>East (E)</option>
+              <option value="W">West (W)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Active Blockades List -->
+        <div class="space-y-2 mb-5">
+          <span class="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-wider block">Active Road Blockades:</span>
+          <div id="activeBarricadesList" class="space-y-2 max-h-36 overflow-y-auto pr-1">
+            <div class="p-2.5 rounded-xl bg-surface-container-high/40 border border-white/5 flex items-center justify-between text-xs font-code-telemetry">
+              <span class="text-on-surface-variant">No active road barricades currently deployed.</span>
+              <span class="text-tertiary">Grid 100% Clear</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button id="btnDeployBarricadeCustom" class="flex-1 py-3.5 rounded-2xl bg-error-container/20 hover:bg-error-container/35 border border-error/40 text-error font-headline-sm font-semibold flex items-center justify-center gap-2 transition-all shadow-[0_0_20px_rgba(255,51,102,0.15)]" type="button">
+          <span class="material-symbols-outlined text-[20px]">block</span>
+          <span>Deploy Segment Barricade</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Incident & Emergency Activity Table -->
+  <div class="p-space-lg rounded-[26px] bg-surface-container-low/60 backdrop-blur-3xl border border-white/10 shadow-lg">
+    <div class="flex items-center justify-between pb-3 mb-4 border-b border-white/5">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-secondary-fixed text-[20px]">history</span>
+        <h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Incident &amp; Emergency Event History</h3>
+      </div>
+      <span class="font-code-telemetry text-[11px] text-on-surface-variant">Audit Stream</span>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-left font-code-telemetry text-xs">
+        <thead class="text-on-surface-variant border-b border-white/5 uppercase text-[10px]">
+          <tr>
+            <th class="pb-2.5">Tick</th>
+            <th class="pb-2.5">Category</th>
+            <th class="pb-2.5">Origin / Location</th>
+            <th class="pb-2.5">Target Corridor</th>
+            <th class="pb-2.5">Transit Latency</th>
+            <th class="pb-2.5">Status</th>
+          </tr>
+        </thead>
+        <tbody id="incidentsHistoryBody" class="divide-y divide-white/5 text-on-surface">
+          <tr>
+            <td class="py-2.5 text-secondary-fixed font-mono">T+18,420</td>
+            <td class="py-2.5"><span class="px-2 py-0.5 rounded bg-secondary-container/20 text-secondary-fixed font-semibold">EMERGENCY</span></td>
+            <td class="py-2.5">Node (0,3)</td>
+            <td class="py-2.5">BFS Lock: (0,3)➔(1,3)➔(2,3)➔(3,0)</td>
+            <td class="py-2.5 text-tertiary-fixed font-bold">18.2 ticks</td>
+            <td class="py-2.5"><span class="px-2 py-0.5 rounded bg-tertiary-container/20 text-tertiary-fixed font-semibold">COMPLETED</span></td>
+          </tr>
+          <tr>
+            <td class="py-2.5 text-error font-mono">T+18,260</td>
+            <td class="py-2.5"><span class="px-2 py-0.5 rounded bg-error-container/20 text-error font-semibold">INCIDENT</span></td>
+            <td class="py-2.5">Node (1,0) Approach W</td>
+            <td class="py-2.5">Rerouted Eastward via Node (1,1)</td>
+            <td class="py-2.5 text-on-surface-variant">Cleared in 45t</td>
+            <td class="py-2.5"><span class="px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-semibold">RESOLVED</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================
+     PAGE 5: ABOUT & MATHEMATICAL ARCHITECTURE
+     ======================================================== -->
+<section id="page-about" class="page-view hidden flex flex-col w-full">
+  <!-- Hero Header -->
+  <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8 pt-2">
+    <div>
+      <div class="flex items-center gap-2 mb-2">
+        <span class="px-2.5 py-0.5 rounded-full bg-primary/10 border border-primary/20 font-code-telemetry text-[11px] text-primary uppercase tracking-widest font-semibold">System Specifications</span>
+        <span class="text-outline-variant font-code-telemetry text-[12px]">•</span>
+        <span class="font-code-telemetry text-[11px] text-on-surface-variant tracking-wider uppercase">Sequoia MARL Engine</span>
+      </div>
+      <h1 class="font-display-hero text-display-hero text-white tracking-tight flex items-baseline gap-3 flex-wrap">
+        <span>About</span>
+        <span class="bg-gradient-to-r from-primary-fixed via-secondary-fixed to-primary bg-clip-text text-transparent font-medium">CityFlow AI.</span>
+      </h1>
+      <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mt-2 leading-relaxed">
+        Decentralized Multi-Agent Reinforcement Learning (MARL) for urban traffic optimization with zero-wait emergency wave preemption and autonomous collision mitigation.
+      </p>
+    </div>
+    <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container-high/60 border border-white/10 font-code-telemetry text-[11px] text-on-surface-variant">
+      <span>Stack: Python 3.11 • FastAPI • ES6 Canvas</span>
+    </div>
+  </div>
+
+  <!-- Documentation Bento -->
+  <div class="grid grid-cols-12 gap-gutter-desktop mb-8">
+    <!-- Architecture Formulation Card -->
+    <div class="col-span-12 lg:col-span-6 p-space-lg rounded-[26px] bg-surface-container-low/60 backdrop-blur-3xl border border-white/10 shadow-lg">
+      <div class="flex items-center gap-2 pb-3 mb-4 border-b border-white/5">
+        <span class="material-symbols-outlined text-primary text-[20px]">functions</span>
+        <h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Mathematical Reinforcement Learning Model</h3>
+      </div>
+      <div class="space-y-4 font-body-md text-body-md text-on-surface-variant leading-relaxed">
+        <p>
+          Each of the 16 intersections is modeled as an independent Markov Decision Process (MDP) agent with observation state <code class="text-primary-fixed font-mono">s = [q_N, q_S, q_E, q_W]</code> and action set <code class="text-secondary-fixed font-mono">A = {NS-Green, EW-Green}</code>.
+        </p>
+        <div class="p-3.5 rounded-xl bg-surface-container-high/60 border border-white/5 font-code-telemetry text-xs text-on-surface space-y-2">
+          <div class="text-primary-fixed font-semibold">Bellman Value Iteration Update:</div>
+          <div class="p-2.5 rounded-lg bg-surface-container-lowest font-mono text-[11px] text-secondary-fixed">
+            Q(s, a) ← Q(s, a) + α · [ R(s, a) + γ · max_{a'} Q(s', a') − Q(s, a) ]
+          </div>
+          <div class="text-on-surface-variant text-[11px]">
+            Where learning rate <code class="text-primary">α = 0.12</code> and discount factor <code class="text-primary">γ = 0.95</code>.
+          </div>
+        </div>
+        <div class="p-3.5 rounded-xl bg-surface-container-high/60 border border-white/5 font-code-telemetry text-xs text-on-surface space-y-2">
+          <div class="text-tertiary-fixed font-semibold">Collaborative Neighborhood Reward Function:</div>
+          <div class="p-2.5 rounded-lg bg-surface-container-lowest font-mono text-[11px] text-tertiary-fixed">
+            R(s, a) = −( q_local² + 0.30 · q_neighbor_load )
+          </div>
+          <div class="text-on-surface-variant text-[11px]">
+            Penalizes local queue quadratic backlog while discouraging spillback into adjacent intersection sectors.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BFS Algorithm & Zero-Dependency Philosophy -->
+    <div class="col-span-12 lg:col-span-6 p-space-lg rounded-[26px] bg-surface-container-low/60 backdrop-blur-3xl border border-white/10 shadow-lg flex flex-col justify-between">
+      <div>
+        <div class="flex items-center gap-2 pb-3 mb-4 border-b border-white/5">
+          <span class="material-symbols-outlined text-secondary-fixed text-[20px]">account_tree</span>
+          <h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Deterministic BFS Green Wave Algorithm</h3>
+        </div>
+        <div class="space-y-4 font-body-md text-body-md text-on-surface-variant leading-relaxed">
+          <p>
+            Emergency transit guarantees zero starvation by pre-empting reinforcement learning policies along the shortest planar route:
+          </p>
+          <ul class="list-disc list-inside space-y-2 font-code-telemetry text-xs text-on-surface-variant">
+            <li><strong class="text-on-surface">Queue Graph Search:</strong> Explores the 4x4 adjacency graph in <code class="text-secondary-fixed">O(V + E)</code> microsecond time.</li>
+            <li><strong class="text-on-surface">Forced Phase Lock:</strong> Intersections along the corridor set <code class="text-secondary-fixed">forced = direction</code>, ensuring continuous green wave clearance.</li>
+            <li><strong class="text-on-surface">Automatic Resumption:</strong> Once the emergency asset clears a junction, the local Q-agent seamlessly reclaims signal control without state loss.</li>
+          </ul>
+          <div class="p-3.5 rounded-xl bg-surface-container-high/60 border border-white/5 font-code-telemetry text-xs space-y-1">
+            <span class="text-tertiary-fixed font-semibold">Zero-Dependency Engineering Philosophy:</span>
+            <p class="text-on-surface-variant text-[11px]">
+              Built entirely in Python 3.11, FastAPI, and Vanilla ES6 Canvas without SUMO, Docker, or heavy neural networks. Produces sub-5ms simulation step latency and 60 FPS hardware-accelerated rendering on standard consumer hardware.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Benchmarks Table Bento -->
+  <div class="p-space-lg rounded-[26px] bg-surface-container-low/60 backdrop-blur-3xl border border-white/10 shadow-lg mb-8">
+    <div class="flex items-center justify-between pb-3 mb-4 border-b border-white/5">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary text-[20px]">table_chart</span>
+        <h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Benchmark Comparison: CityFlow MARL vs Conventional Infrastructure</h3>
+      </div>
+      <span class="font-code-telemetry text-[11px] text-primary-fixed">Validated Results</span>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-left font-code-telemetry text-xs">
+        <thead class="text-on-surface-variant border-b border-white/5 uppercase text-[10px]">
+          <tr>
+            <th class="pb-3">Performance Dimension</th>
+            <th class="pb-3 text-secondary-fixed">CityFlow MARL (Ours)</th>
+            <th class="pb-3">Fixed 15t Municipal Timer</th>
+            <th class="pb-3">Actuated Loop Detectors</th>
+            <th class="pb-3 text-tertiary-fixed">Net Advantage</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-white/5 text-on-surface">
+          <tr>
+            <td class="py-3 font-semibold">Mean Vehicle Wait Time</td>
+            <td class="py-3 text-secondary-fixed font-bold">4.1 – 6.8 ticks</td>
+            <td class="py-3 text-on-surface-variant">14.8 – 18.2 ticks</td>
+            <td class="py-3 text-on-surface-variant">9.4 – 12.1 ticks</td>
+            <td class="py-3 text-tertiary-fixed font-bold">-72.3% Delay Reduction</td>
+          </tr>
+          <tr>
+            <td class="py-3 font-semibold">Hourly System Capacity</td>
+            <td class="py-3 text-secondary-fixed font-bold">54,000+ veh/hr</td>
+            <td class="py-3 text-on-surface-variant">37,200 veh/hr</td>
+            <td class="py-3 text-on-surface-variant">44,800 veh/hr</td>
+            <td class="py-3 text-tertiary-fixed font-bold">+45.6% Throughput Gain</td>
+          </tr>
+          <tr>
+            <td class="py-3 font-semibold">Emergency Ambulance Transit</td>
+            <td class="py-3 text-secondary-fixed font-bold">12.4 ticks (BFS Wave)</td>
+            <td class="py-3 text-on-surface-variant">30.6 ticks (Static)</td>
+            <td class="py-3 text-on-surface-variant">22.8 ticks</td>
+            <td class="py-3 text-tertiary-fixed font-bold">18.2 ticks Faster Transit</td>
+          </tr>
+          <tr>
+            <td class="py-3 font-semibold">Arterial Blockage Reroute</td>
+            <td class="py-3 text-secondary-fixed font-bold">&lt; 12 ms Dynamic Diversion</td>
+            <td class="py-3 text-error">Gridlock &amp; Spillback</td>
+            <td class="py-3 text-on-surface-variant">Manual Dispatch Only</td>
+            <td class="py-3 text-tertiary-fixed font-bold">Zero-Starvation Guarantee</td>
+          </tr>
+          <tr>
+            <td class="py-3 font-semibold">Computational Overhead</td>
+            <td class="py-3 text-secondary-fixed font-bold">4.2 ms / tick (Lightweight)</td>
+            <td class="py-3 text-on-surface-variant">0.1 ms / tick</td>
+            <td class="py-3 text-on-surface-variant">1.5 ms / tick</td>
+            <td class="py-3 text-tertiary-fixed font-bold">No GPU / No Docker Needed</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- API Reference Bento -->
+  <div class="p-space-lg rounded-[26px] bg-surface-container-low/60 backdrop-blur-3xl border border-white/10 shadow-lg">
+    <div class="flex items-center justify-between pb-3 mb-4 border-b border-white/5">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-secondary-fixed text-[20px]">api</span>
+        <h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">REST API &amp; Inter-Service Specification</h3>
+      </div>
+      <span class="font-code-telemetry text-[11px] text-tertiary-fixed">FastAPI OpenAPI 3.0</span>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 font-code-telemetry text-xs">
+      <div class="p-3 rounded-xl bg-surface-container-high/40 border border-white/5 flex items-center justify-between">
+        <div class="flex items-center gap-2"><span class="px-2 py-0.5 rounded bg-primary/20 text-primary-fixed font-bold">GET</span><span>/state</span></div>
+        <span class="text-on-surface-variant">Full city snapshot, vehicles, signals, KPIs</span>
+      </div>
+      <div class="p-3 rounded-xl bg-surface-container-high/40 border border-white/5 flex items-center justify-between">
+        <div class="flex items-center gap-2"><span class="px-2 py-0.5 rounded bg-secondary/20 text-secondary-fixed font-bold">POST</span><span>/control</span></div>
+        <span class="text-on-surface-variant">Steer simulation, pause, emergency, incidents</span>
+      </div>
+      <div class="p-3 rounded-xl bg-surface-container-high/40 border border-white/5 flex items-center justify-between">
+        <div class="flex items-center gap-2"><span class="px-2 py-0.5 rounded bg-primary/20 text-primary-fixed font-bold">GET</span><span>/messages</span></div>
+        <span class="text-on-surface-variant">Zero-copy inter-agent pub-sub message feed</span>
+      </div>
+      <div class="p-3 rounded-xl bg-surface-container-high/40 border border-white/5 flex items-center justify-between">
+        <div class="flex items-center gap-2"><span class="px-2 py-0.5 rounded bg-primary/20 text-primary-fixed font-bold">GET</span><span>/inspect/{id}</span></div>
+        <span class="text-on-surface-variant">Deep inspection of individual node Q-table</span>
+      </div>
+      <div class="p-3 rounded-xl bg-surface-container-high/40 border border-white/5 flex items-center justify-between">
+        <div class="flex items-center gap-2"><span class="px-2 py-0.5 rounded bg-tertiary/20 text-tertiary-fixed font-bold">GET</span><span>/export/csv</span></div>
+        <span class="text-on-surface-variant">Export complete simulation time-series to CSV</span>
+      </div>
+      <div class="p-3 rounded-xl bg-surface-container-high/40 border border-white/5 flex items-center justify-between">
+        <div class="flex items-center gap-2"><span class="px-2 py-0.5 rounded bg-primary/20 text-primary-fixed font-bold">GET</span><span>/metrics</span></div>
+        <span class="text-on-surface-variant">Prometheus telemetry scrape target</span>
+      </div>
+    </div>
+  </div>
+  <!-- Creator & Engineering Credits Hero Bento -->
+  <div class="mt-6 p-space-xl rounded-[28px] bg-gradient-to-br from-surface-container-low/85 via-surface-container/70 to-surface-container-high/50 backdrop-blur-3xl border border-primary/30 shadow-[0_20px_50px_-10px_rgba(124,58,237,0.25)] relative overflow-hidden">
+    <!-- Ambient glow accents -->
+    <div class="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-primary/20 blur-[90px] pointer-events-none"></div>
+    <div class="absolute -bottom-24 -left-24 w-72 h-72 rounded-full bg-secondary/15 blur-[90px] pointer-events-none"></div>
+
+    <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-6">
+      <div class="flex flex-col sm:flex-row items-center gap-5 text-center sm:text-left">
+        <div class="relative shrink-0">
+          <div class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-primary via-secondary to-tertiary-fixed p-[2px] shadow-[0_0_24px_rgba(192,132,252,0.45)]">
+            <div class="w-full h-full rounded-[14px] bg-surface flex items-center justify-center overflow-hidden">
+              <span class="font-headline-lg font-bold text-transparent bg-clip-text bg-gradient-to-br from-primary to-secondary">RV</span>
+            </div>
+          </div>
+          <span class="absolute -bottom-1 -right-1 flex h-4 w-4">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-4 w-4 bg-tertiary border-2 border-surface"></span>
+          </span>
+        </div>
+        
+        <div class="flex flex-col">
+          <div class="flex items-center justify-center sm:justify-start gap-2 flex-wrap">
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-code-telemetry tracking-wider uppercase font-semibold bg-primary/20 text-primary-fixed border border-primary/30">System Architect &amp; Lead AI Engineer</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-code-telemetry bg-tertiary/20 text-tertiary-fixed border border-tertiary/30">Author &amp; Creator</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-display-hero font-bold text-white tracking-tight mt-1">
+            Handcrafted by <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-tertiary-fixed">RAJHAVEL V S</span>
+          </h2>
+          <p class="text-sm text-slate-200/90 max-w-xl mt-1 leading-relaxed">
+            Architected and engineered the CityFlow Autonomous Urban Mobility platform, combining Sequoia Multi-Agent Reinforcement Learning (MARL), Bellman Q-convergence, dynamic emergency BFS wave preemption, and high-FPS spatial telemetry.
+          </p>
+        </div>
+      </div>
+
+      <!-- Connect Links Pill Group -->
+      <div class="flex flex-wrap items-center justify-center gap-2.5 shrink-0">
+        <!-- LinkedIn -->
+        <a href="https://www.linkedin.com/in/rajhavelvs/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface-container-high/70 hover:bg-[#0077b5]/20 text-on-surface hover:text-[#38bdf8] border border-white/10 hover:border-[#0077b5]/50 shadow-md transition-all group">
+          <svg class="w-4 h-4 fill-current text-[#38bdf8] group-hover:scale-110 transition-transform" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+          <div class="flex flex-col text-left">
+            <span class="text-[10px] text-on-surface-variant uppercase tracking-wider font-code-telemetry leading-none">LinkedIn</span>
+            <span class="text-xs font-semibold">rajhavelvs</span>
+          </div>
+        </a>
+
+        <!-- Portfolio -->
+        <a href="https://vsrajhavel.github.io" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface-container-high/70 hover:bg-tertiary/20 text-on-surface hover:text-tertiary-fixed border border-white/10 hover:border-tertiary/50 shadow-md transition-all group">
+          <svg class="w-4 h-4 stroke-current fill-none text-tertiary-fixed group-hover:scale-110 transition-transform" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          <div class="flex flex-col text-left">
+            <span class="text-[10px] text-on-surface-variant uppercase tracking-wider font-code-telemetry leading-none">Portfolio</span>
+            <span class="text-xs font-semibold">vsrajhavel.github.io</span>
+          </div>
+        </a>
+
+        <!-- GitHub -->
+        <a href="https://github.com/VSRAJHAVEL" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface-container-high/70 hover:bg-white/15 text-on-surface hover:text-white border border-white/10 hover:border-white/40 shadow-md transition-all group">
+          <svg class="w-4 h-4 fill-current text-white group-hover:scale-110 transition-transform" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          <div class="flex flex-col text-left">
+            <span class="text-[10px] text-on-surface-variant uppercase tracking-wider font-code-telemetry leading-none">GitHub</span>
+            <span class="text-xs font-semibold">VSRAJHAVEL</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Client-side Interactive Behavior & Live Simulation Engine -->
+<script src="/static/modern/app.js?v=60hz_v4"></script>
+</main><footer class="fixed bottom-0 left-0 right-0 z-40 flex items-center justify-center pb-space-sm px-margin pointer-events-none"><div class="h-12 w-full max-w-[1560px] mx-auto px-space-md bg-surface-container-low/85 backdrop-blur-2xl rounded-full shadow-[0_16px_36px_-8px_rgba(0,0,0,0.5)] border border-white/10 flex items-center justify-between pointer-events-auto transition-all"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-tertiary-fixed shadow-[0_0_8px_rgba(108,255,130,0.6)]"></div><span class="font-code-telemetry text-[11px] sm:text-code-telemetry text-on-surface-variant"><strong class="text-on-surface font-semibold">Core Engine 99.98%</strong> • Latency 4.2ms • 16/16 Q-Agents Synced</span></div><!-- Handcrafted by RAJHAVEL V S Credits in Footer --><div class="flex items-center gap-2 text-xs font-medium"><span class="text-on-surface-variant hidden sm:inline">Handcrafted by</span><span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-tertiary-fixed font-bold tracking-wide">RAJHAVEL V S</span><div class="flex items-center gap-1.5 ml-1"><a href="https://www.linkedin.com/in/rajhavelvs/" target="_blank" rel="noopener noreferrer" class="w-6 h-6 rounded-full bg-white/5 hover:bg-[#0077b5]/30 hover:text-[#38bdf8] text-on-surface-variant flex items-center justify-center transition-all border border-white/10 hover:border-[#0077b5]/50" title="LinkedIn: RAJHAVEL V S"><svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a><a href="https://vsrajhavel.github.io" target="_blank" rel="noopener noreferrer" class="w-6 h-6 rounded-full bg-white/5 hover:bg-tertiary/30 hover:text-tertiary-fixed text-on-surface-variant flex items-center justify-center transition-all border border-white/10 hover:border-tertiary/50" title="Portfolio: vsrajhavel.github.io"><svg class="w-3.5 h-3.5 stroke-current fill-none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></a><a href="https://github.com/VSRAJHAVEL" target="_blank" rel="noopener noreferrer" class="w-6 h-6 rounded-full bg-white/5 hover:bg-white/20 hover:text-white text-on-surface-variant flex items-center justify-center transition-all border border-white/10 hover:border-white/30" title="GitHub: @VSRAJHAVEL"><svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg></a></div></div><div class="hidden lg:flex items-center gap-space-sm"><span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Windows Controls:</span><div class="flex items-center gap-1.5"><div class="flex items-center gap-1 px-2 py-0.5 rounded-md bg-surface-container-high/80 border border-white/10 font-code-telemetry text-[11px] text-on-surface"><kbd class="text-primary font-medium">Space</kbd><span class="text-on-surface-variant text-[10px]">Pause</span></div><div class="flex items-center gap-1 px-2 py-0.5 rounded-md bg-surface-container-high/80 border border-white/10 font-code-telemetry text-[11px] text-on-surface"><kbd class="text-primary font-medium">R</kbd><span class="text-on-surface-variant text-[10px]">Reset</span></div><div class="flex items-center gap-1 px-2 py-0.5 rounded-md bg-surface-container-high/80 border border-white/10 font-code-telemetry text-[11px] text-on-surface"><kbd class="text-primary font-medium">E</kbd><span class="text-on-surface-variant text-[10px]">BFS</span></div><div class="flex items-center gap-1 px-2 py-0.5 rounded-md bg-surface-container-high/80 border border-white/10 font-code-telemetry text-[11px] text-on-surface"><kbd class="text-primary font-medium">I</kbd><span class="text-on-surface-variant text-[10px]">Incident</span></div><div class="flex items-center gap-1 px-2 py-0.5 rounded-md bg-surface-container-high/80 border border-white/10 font-code-telemetry text-[11px] text-on-surface"><kbd class="text-primary font-medium">C</kbd><span class="text-on-surface-variant text-[10px]">Compare</span></div><div class="flex items-center gap-1 px-2 py-0.5 rounded-md bg-surface-container-high/80 border border-white/10 font-code-telemetry text-[11px] text-on-surface"><kbd class="text-primary font-medium">A</kbd><span class="text-on-surface-variant text-[10px]">Analytics</span></div><div class="flex items-center gap-1 px-2 py-0.5 rounded-md bg-surface-container-high/80 border border-white/10 font-code-telemetry text-[11px] text-on-surface cursor-pointer" onclick="window.openCommandPalette &amp;&amp; window.openCommandPalette()"><kbd class="text-primary font-medium">Ctrl+K</kbd><span class="text-on-surface-variant text-[10px]">Actions</span></div></div></div></div></footer>
+
+<!-- Windows Quick Action Command Palette Modal (Ctrl+K) -->
+<div id="cmdPaletteModal" class="hidden fixed inset-0 z-[9999] items-start justify-center pt-24 px-4 bg-black/70 backdrop-blur-md" style="display: none;">
+  <div class="w-full max-w-xl rounded-2xl bg-surface-container-low/95 border border-white/15 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.85)] p-5 text-on-surface flex flex-col gap-4">
+    <div class="flex items-center justify-between pb-3 border-b border-white/10">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary text-[22px]">terminal</span>
+        <span class="font-headline-sm text-sm font-bold text-white">Windows Quick Command Palette</span>
+        <span class="px-2 py-0.5 rounded text-[10px] bg-primary/20 text-primary-fixed font-mono font-bold">Ctrl + K</span>
+      </div>
+      <button id="cmdPaletteClose" class="w-7 h-7 rounded-lg hover:bg-white/10 flex items-center justify-center text-on-surface-variant hover:text-white transition-colors cursor-pointer">✕</button>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-code-telemetry">
+      <button class="cmd-action-btn flex items-center justify-between p-2.5 rounded-xl bg-surface-container-high/60 hover:bg-primary/20 hover:border-primary/40 border border-white/5 transition-all text-left cursor-pointer" data-cmd="pause">
+        <span>Play / Pause</span>
+        <kbd class="px-1.5 py-0.5 rounded bg-black/40 text-primary font-mono font-bold">Space</kbd>
+      </button>
+      <button class="cmd-action-btn flex items-center justify-between p-2.5 rounded-xl bg-surface-container-high/60 hover:bg-primary/20 hover:border-primary/40 border border-white/5 transition-all text-left cursor-pointer" data-cmd="reset">
+        <span>Reset Simulation</span>
+        <kbd class="px-1.5 py-0.5 rounded bg-black/40 text-primary font-mono font-bold">R</kbd>
+      </button>
+      <button class="cmd-action-btn flex items-center justify-between p-2.5 rounded-xl bg-surface-container-high/60 hover:bg-secondary-container/20 hover:border-secondary/40 border border-white/5 transition-all text-left cursor-pointer" data-cmd="emergency">
+        <span>Dispatch Ambulance (BFS)</span>
+        <kbd class="px-1.5 py-0.5 rounded bg-black/40 text-secondary-fixed font-mono font-bold">E</kbd>
+      </button>
+      <button class="cmd-action-btn flex items-center justify-between p-2.5 rounded-xl bg-surface-container-high/60 hover:bg-error-container/20 hover:border-error/40 border border-white/5 transition-all text-left cursor-pointer" data-cmd="incident">
+        <span>Deploy Road Barricade</span>
+        <kbd class="px-1.5 py-0.5 rounded bg-black/40 text-error font-mono font-bold">I</kbd>
+      </button>
+      <button class="cmd-action-btn flex items-center justify-between p-2.5 rounded-xl bg-surface-container-high/60 hover:bg-primary/20 hover:border-primary/40 border border-white/5 transition-all text-left cursor-pointer" data-cmd="compare">
+        <span>Toggle Split Compare View</span>
+        <kbd class="px-1.5 py-0.5 rounded bg-black/40 text-primary font-mono font-bold">C</kbd>
+      </button>
+      <button class="cmd-action-btn flex items-center justify-between p-2.5 rounded-xl bg-surface-container-high/60 hover:bg-primary/20 hover:border-primary/40 border border-white/5 transition-all text-left cursor-pointer" data-cmd="analytics">
+        <span>Telemetry & Analytics</span>
+        <kbd class="px-1.5 py-0.5 rounded bg-black/40 text-primary font-mono font-bold">A</kbd>
+      </button>
+      <button class="cmd-action-btn flex items-center justify-between p-2.5 rounded-xl bg-surface-container-high/60 hover:bg-tertiary-container/20 hover:border-tertiary/40 border border-white/5 transition-all text-left cursor-pointer" data-cmd="normal">
+        <span>Normal Flow Scenario</span>
+        <kbd class="px-1.5 py-0.5 rounded bg-black/40 text-tertiary-fixed font-mono font-bold">1</kbd>
+      </button>
+      <button class="cmd-action-btn flex items-center justify-between p-2.5 rounded-xl bg-surface-container-high/60 hover:bg-amber-500/20 hover:border-amber-500/40 border border-white/5 transition-all text-left cursor-pointer" data-cmd="rush">
+        <span>Rush Hour Congestion</span>
+        <kbd class="px-1.5 py-0.5 rounded bg-black/40 text-amber-300 font-mono font-bold">2</kbd>
+      </button>
+      <button class="cmd-action-btn flex items-center justify-between p-2.5 rounded-xl bg-surface-container-high/60 hover:bg-primary/20 hover:border-primary/40 border border-white/5 transition-all text-left cursor-pointer" data-cmd="export">
+        <span>Export Metrics (CSV)</span>
+        <kbd class="px-1.5 py-0.5 rounded bg-black/40 text-primary font-mono font-bold">Ctrl+S</kbd>
+      </button>
+      <button class="cmd-action-btn flex items-center justify-between p-2.5 rounded-xl bg-surface-container-high/60 hover:bg-primary/20 hover:border-primary/40 border border-white/5 transition-all text-left cursor-pointer" data-cmd="theme">
+        <span>Toggle Dark / Light Theme</span>
+        <kbd class="px-1.5 py-0.5 rounded bg-black/40 text-primary font-mono font-bold">T</kbd>
+      </button>
+    </div>
+    <div class="text-[11px] text-on-surface-variant flex items-center justify-between pt-2 border-t border-white/5">
+      <span>Windows 11 / 10 Hotkeys Enabled</span>
+      <span>Press <kbd class="px-1 rounded bg-white/10 font-mono">Esc</kbd> to close</span>
+    </div>
+  </div>
+</div>
+</body></html>
