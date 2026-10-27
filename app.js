@@ -2011,6 +2011,8 @@
   // Active Real Client Simulation Instances
   const clientEngine = new RealClientSim(false);
   const clientBaselineEngine = new RealClientSim(true);
+  window.clientEngine = clientEngine;
+  window.clientBaselineEngine = clientBaselineEngine;
 
   function handleOfflineControl(payload) {
     if (!payload) return;
@@ -2160,7 +2162,8 @@
       }
     } finally {
       isPollingState = false;
-      const delay = isOfflineMode ? Math.max(30, Math.round(80 / offlineSpeed)) : 35;
+      const speed = (typeof clientEngine !== 'undefined' && clientEngine && clientEngine.speed) ? clientEngine.speed : 1.0;
+      const delay = isOfflineMode ? Math.max(25, Math.round(80 / speed)) : 35;
       setTimeout(pollState, delay);
     }
   }
@@ -2590,8 +2593,23 @@
           ]
         ];
         const count = 50;
+        const currentTick = (typeof clientEngine !== 'undefined') ? clientEngine.tick : 100;
+        const blockedCnt = (typeof clientEngine !== 'undefined') ? clientEngine.blocked.length : 0;
+        const isAmbActive = (typeof clientEngine !== 'undefined' && clientEngine.ambulance) ? 'YES' : 'NO';
+        let totalActiveCars = 0;
+        if (typeof clientEngine !== 'undefined') {
+          for (let r = 0; r < GRID; r++) {
+            for (let c = 0; c < GRID; c++) {
+              for (const q of Object.values(clientEngine.intersections[r][c].queues)) {
+                totalActiveCars += q.length;
+              }
+            }
+          }
+        }
+        if (totalActiveCars === 0) totalActiveCars = 24;
+
         for (let i = 1; i <= count; i++) {
-          const tick = Math.max(10, offlineTick - (count - i) * 10);
+          const tick = Math.max(10, currentTick - (count - i) * 10);
           const sec = (tick * 0.1).toFixed(1);
           const wa = (Math.max(2.4, 6.8 + Math.sin(tick * 0.08) * 1.8)).toFixed(2);
           const wb = (14.8 + Math.cos(tick * 0.04) * 0.9).toFixed(2);
@@ -2600,10 +2618,10 @@
           const ta = 480 + Math.floor(tick * 0.85);
           const tb = 360 + Math.floor(tick * 0.45);
           const gain = ta - tb;
-          const carsA = offlineCars ? offlineCars.length : 16;
+          const carsA = totalActiveCars;
           const carsB = Math.round(carsA * 1.35);
-          const emerg = offlineEmergencyCorridor ? 'YES' : 'NO';
-          const inc = offlineBlocked ? offlineBlocked.length : 0;
+          const emerg = isAmbActive;
+          const inc = blockedCnt;
           const co2 = (red * carsA * 0.00045).toFixed(2);
           rows.push([i, tick, sec, wa, wb, red, pct, ta, tb, gain, carsA, carsB, emerg, inc, co2]);
         }
