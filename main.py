@@ -240,10 +240,14 @@ async def get_messages():
     return JSONResponse(list(system.bus.event_log))
 
 
+EXPORT_FILE = Path("static/exports/cityflow_traffic_telemetry.csv")
+EXPORT_FILE.parent.mkdir(parents=True, exist_ok=True)
+
+
 @app.get("/export/csv")
 async def export_csv():
-    """Export clean, high-fidelity simulation telemetry as a fully formatted RFC 4180 CSV with UTF-8 BOM for Excel."""
-    from datetime import datetime
+    """Export clean, high-fidelity simulation telemetry as a physical RFC 4180 CSV with UTF-8 BOM via FileResponse."""
+    from fastapi.responses import FileResponse
     records = state.get("telemetry_records", [])
 
     # If simulation just started, build records from current state so file is never blank
@@ -269,57 +273,55 @@ async def export_csv():
             "incidents": len(sim.blocked_segments)
         }]
 
-    out = io.StringIO(newline="")
-    writer = csv.writer(out, lineterminator="\r\n")
-
-    # RFC 4180 Standard Header with clear, human-readable column titles
-    writer.writerow([
-        "Sample_ID",
-        "Simulation_Tick",
-        "Elapsed_Seconds",
-        "Agent_Avg_Wait_Ticks",
-        "Baseline_Avg_Wait_Ticks",
-        "Wait_Reduction_Ticks",
-        "Improvement_Percentage",
-        "Agent_Cumulative_Throughput",
-        "Baseline_Cumulative_Throughput",
-        "Throughput_Gain_Vehicles",
-        "Active_Vehicles_Agent",
-        "Active_Vehicles_Baseline",
-        "Emergency_Preemption_Active",
-        "Active_Incidents_Count",
-        "Estimated_CO2_Saved_Kg"
-    ])
-
-    for idx, r in enumerate(records, 1):
-        tick = r["tick"]
-        sec = r["time_sec"]
-        wa = r["agent_wait"]
-        wb = r["baseline_wait"]
-        reduction = round(max(0.0, wb - wa), 2)
-        pct = round(((wb - wa) / max(0.01, wb)) * 100, 2) if wb > 0 else 0.0
-        ta = r["agent_throughput"]
-        tb = r["baseline_throughput"]
-        gain = max(0, ta - tb)
-        cars_a = r["agent_cars"]
-        cars_b = r["baseline_cars"]
-        emerg = "YES" if r["emergency"] else "NO"
-        inc = r["incidents"]
-        co2 = round(reduction * min(cars_a, max(1, ta)) * 0.00045, 2)
-
+    # Write directly to disk with UTF-8 BOM encoding for guaranteed Windows Excel compatibility
+    with open(EXPORT_FILE, "w", encoding="utf-8-sig", newline="") as f:
+        writer = csv.writer(f, lineterminator="\r\n")
+        # RFC 4180 Standard Header with clear, human-readable column titles
         writer.writerow([
-            idx, tick, sec, wa, wb, reduction, f"{pct}%", ta, tb, gain,
-            cars_a, cars_b, emerg, inc, co2
+            "Sample_ID",
+            "Simulation_Tick",
+            "Elapsed_Seconds",
+            "Agent_Avg_Wait_Ticks",
+            "Baseline_Avg_Wait_Ticks",
+            "Wait_Reduction_Ticks",
+            "Improvement_Percentage",
+            "Agent_Cumulative_Throughput",
+            "Baseline_Cumulative_Throughput",
+            "Throughput_Gain_Vehicles",
+            "Active_Vehicles_Agent",
+            "Active_Vehicles_Baseline",
+            "Emergency_Preemption_Active",
+            "Active_Incidents_Count",
+            "Estimated_CO2_Saved_Kg"
         ])
 
-    content = out.getvalue()
-    filename = f"cityflow_traffic_telemetry_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+        for idx, r in enumerate(records, 1):
+            tick = r["tick"]
+            sec = r["time_sec"]
+            wa = r["agent_wait"]
+            wb = r["baseline_wait"]
+            reduction = round(max(0.0, wb - wa), 2)
+            pct = round(((wb - wa) / max(0.01, wb)) * 100, 2) if wb > 0 else 0.0
+            ta = r["agent_throughput"]
+            tb = r["baseline_throughput"]
+            gain = max(0, ta - tb)
+            cars_a = r["agent_cars"]
+            cars_b = r["baseline_cars"]
+            emerg = "YES" if r["emergency"] else "NO"
+            inc = r["incidents"]
+            co2 = round(reduction * min(cars_a, max(1, ta)) * 0.00045, 2)
 
-    return Response(
-        content=content.encode("utf-8-sig"),
+            writer.writerow([
+                idx, tick, sec, wa, wb, reduction, f"{pct}%", ta, tb, gain,
+                cars_a, cars_b, emerg, inc, co2
+            ])
+
+    return FileResponse(
+        path=str(EXPORT_FILE),
         media_type="text/csv; charset=utf-8",
+        filename="cityflow_traffic_telemetry.csv",
         headers={
-            "Content-Disposition": f'attachment; filename="{filename}"',
+            "Content-Disposition": 'attachment; filename="cityflow_traffic_telemetry.csv"',
             "Cache-Control": "no-cache, no-store, must-revalidate",
             "Pragma": "no-cache",
             "Expires": "0"

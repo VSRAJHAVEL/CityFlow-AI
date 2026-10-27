@@ -2184,55 +2184,10 @@
       });
     });
 
-    // 13. Export CSV with Clean Blob Download & Header Filename Parsing
+    // 13. Direct CSV Telemetry Export (Native Stream Download)
     function triggerCsvDownload() {
-      fetch(API.exportCsv)
-        .then((res) => {
-          if (!res.ok) throw new Error('Export request failed: ' + res.status);
-          let filename = 'cityflow_traffic_telemetry.csv';
-          const disposition = res.headers.get('content-disposition');
-          if (disposition && disposition.indexOf('filename=') !== -1) {
-            const matches = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(disposition);
-            if (matches && matches[1]) {
-              filename = matches[1].replace(/['"]/g, '');
-            }
-          }
-          return res.blob().then((blob) => ({ blob, filename }));
-        })
-        .then(({ blob, filename }) => {
-          const blobUrl = window.URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.style.display = 'none';
-          a.href = blobUrl;
-          a.download = filename;
-          document.body.appendChild(a);
-          a.click();
-          setTimeout(() => {
-            window.URL.revokeObjectURL(blobUrl);
-            document.body.removeChild(a);
-          }, 400);
-        })
-        .catch((err) => {
-          console.warn('Blob download fallback:', err);
-          window.location.href = API.exportCsv;
-        });
+      window.location.href = API.exportCsv;
     }
-
-    const btnExportCsv = document.getElementById('btnExportCsv');
-    if (btnExportCsv) {
-      btnExportCsv.addEventListener('click', (e) => {
-        e.preventDefault();
-        triggerCsvDownload();
-      });
-    }
-
-    // Intercept all /export/csv links for smooth in-page blob download
-    document.querySelectorAll('a[href="/export/csv"]').forEach((link) => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        triggerCsvDownload();
-      });
-    });
 
     // 14. Windows Command Palette (Ctrl+K)
     window.openCommandPalette = function () {
