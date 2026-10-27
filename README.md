@@ -3,8 +3,7 @@ title: CityFlow AI - Autonomous Urban Mobility
 emoji: 🚦
 colorFrom: purple
 colorTo: green
-sdk: docker
-app_port: 7860
+sdk: static
 pinned: false
 license: mit
 ---
