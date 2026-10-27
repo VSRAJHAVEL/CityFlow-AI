@@ -1,3 +1,14 @@
+---
+title: CityFlow AI - Autonomous Urban Mobility
+emoji: 🚦
+colorFrom: purple
+colorTo: green
+sdk: docker
+app_port: 7860
+pinned: false
+license: mit
+---
+
 # CityFlow AI: Multi-Agent Autonomous Urban Mobility Platform
 
 An advanced Multi-Agent Reinforcement Learning (MARL) traffic optimization and autonomous grid orchestration platform featuring 16 decentralized Q-learning intersection agents, emergency BFS wave corridor preemption, and dual-mode cybernetic dashboards.
