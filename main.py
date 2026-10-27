@@ -25,7 +25,8 @@ state = {
     "wait_history_agent": [],
     "wait_history_baseline": [],
     "throughput_history_agent": [],
-    "throughput_history_baseline": []
+    "throughput_history_baseline": [],
+    "telemetry_records": []
 }
 
 # run parallel baseline sim
@@ -39,10 +40,35 @@ async def tick_loop():
             system.step()
             baseline_system.step()
             if sim.tick % 10 == 0:
-                state["wait_history_agent"].append(round(sim.avg_wait(), 2))
-                state["wait_history_baseline"].append(round(baseline_sim.avg_wait(), 2))
-                state["throughput_history_agent"].append(sim.throughput())
-                state["throughput_history_baseline"].append(baseline_sim.throughput())
+                wa = round(sim.avg_wait(), 2)
+                wb = round(baseline_sim.avg_wait(), 2)
+                ta = sim.throughput()
+                tb = baseline_sim.throughput()
+                state["wait_history_agent"].append(wa)
+                state["wait_history_baseline"].append(wb)
+                state["throughput_history_agent"].append(ta)
+                state["throughput_history_baseline"].append(tb)
+
+                agent_cars_cnt = sum(len(q) for row in sim.intersections for inter in row for q in inter.queues.values())
+                base_cars_cnt = sum(len(q) for row in baseline_sim.intersections for inter in row for q in inter.queues.values())
+                emerg = 1 if any(car.is_ambulance for row in sim.intersections for inter in row for q in inter.queues.values() for car in q) else 0
+
+                # Store real-tick telemetry records for accurate CSV export
+                state["telemetry_records"].append({
+                    "tick": sim.tick,
+                    "time_sec": round(sim.tick * 0.1, 1),
+                    "agent_wait": wa,
+                    "baseline_wait": wb,
+                    "agent_throughput": ta,
+                    "baseline_throughput": tb,
+                    "agent_cars": agent_cars_cnt,
+                    "baseline_cars": base_cars_cnt,
+                    "emergency": emerg,
+                    "incidents": len(sim.blocked_segments)
+                })
+                if len(state["telemetry_records"]) > 1000:
+                    state["telemetry_records"] = state["telemetry_records"][-1000:]
+
                 if len(state["wait_history_agent"]) > 300:
                     state["wait_history_agent"] = state["wait_history_agent"][-300:]
                     state["wait_history_baseline"] = state["wait_history_baseline"][-300:]
@@ -216,34 +242,88 @@ async def get_messages():
 
 @app.get("/export/csv")
 async def export_csv():
-    """Export simulation analytics and metrics as CSV."""
-    out = io.StringIO()
-    writer = csv.writer(out)
+    """Export clean, high-fidelity simulation telemetry as a fully formatted RFC 4180 CSV with UTF-8 BOM for Excel."""
+    from datetime import datetime
+    records = state.get("telemetry_records", [])
+
+    # If simulation just started, build records from current state so file is never blank
+    if not records:
+        curr_tick = max(10, sim.tick)
+        wa = round(sim.avg_wait(), 2)
+        wb = round(baseline_sim.avg_wait(), 2)
+        ta = sim.throughput()
+        tb = baseline_sim.throughput()
+        agent_cars_cnt = sum(len(q) for row in sim.intersections for inter in row for q in inter.queues.values())
+        base_cars_cnt = sum(len(q) for row in baseline_sim.intersections for inter in row for q in inter.queues.values())
+        emerg = 1 if any(car.is_ambulance for row in sim.intersections for inter in row for q in inter.queues.values() for car in q) else 0
+        records = [{
+            "tick": curr_tick,
+            "time_sec": round(curr_tick * 0.1, 1),
+            "agent_wait": wa,
+            "baseline_wait": wb,
+            "agent_throughput": ta,
+            "baseline_throughput": tb,
+            "agent_cars": agent_cars_cnt,
+            "baseline_cars": base_cars_cnt,
+            "emergency": emerg,
+            "incidents": len(sim.blocked_segments)
+        }]
+
+    out = io.StringIO(newline="")
+    writer = csv.writer(out, lineterminator="\r\n")
+
+    # RFC 4180 Standard Header with clear, human-readable column titles
     writer.writerow([
-        "Sample_Index", "Tick", "Agent_Avg_Wait", "Baseline_Avg_Wait",
-        "Agent_Throughput", "Baseline_Throughput", "Agent_Improvement_Pct", "CO2_Saved_Kg"
+        "Sample_ID",
+        "Simulation_Tick",
+        "Elapsed_Seconds",
+        "Agent_Avg_Wait_Ticks",
+        "Baseline_Avg_Wait_Ticks",
+        "Wait_Reduction_Ticks",
+        "Improvement_Percentage",
+        "Agent_Cumulative_Throughput",
+        "Baseline_Cumulative_Throughput",
+        "Throughput_Gain_Vehicles",
+        "Active_Vehicles_Agent",
+        "Active_Vehicles_Baseline",
+        "Emergency_Preemption_Active",
+        "Active_Incidents_Count",
+        "Estimated_CO2_Saved_Kg"
     ])
-    
-    waits_a = state["wait_history_agent"]
-    waits_b = state["wait_history_baseline"]
-    thrus_a = state["throughput_history_agent"]
-    thrus_b = state["throughput_history_baseline"]
-    
-    length = max(len(waits_a), len(waits_b))
-    for i in range(length):
-        wa = waits_a[i] if i < len(waits_a) else 0.0
-        wb = waits_b[i] if i < len(waits_b) else 0.0
-        ta = thrus_a[i] if i < len(thrus_a) else 0
-        tb = thrus_b[i] if i < len(thrus_b) else 0
+
+    for idx, r in enumerate(records, 1):
+        tick = r["tick"]
+        sec = r["time_sec"]
+        wa = r["agent_wait"]
+        wb = r["baseline_wait"]
+        reduction = round(max(0.0, wb - wa), 2)
         pct = round(((wb - wa) / max(0.01, wb)) * 100, 2) if wb > 0 else 0.0
-        co2 = round(max(0.0, wb - wa) * ta * 0.0022, 2)
-        writer.writerow([i + 1, i * 10, wa, wb, ta, tb, pct, co2])
+        ta = r["agent_throughput"]
+        tb = r["baseline_throughput"]
+        gain = max(0, ta - tb)
+        cars_a = r["agent_cars"]
+        cars_b = r["baseline_cars"]
+        emerg = "YES" if r["emergency"] else "NO"
+        inc = r["incidents"]
+        co2 = round(reduction * min(cars_a, max(1, ta)) * 0.00045, 2)
+
+        writer.writerow([
+            idx, tick, sec, wa, wb, reduction, f"{pct}%", ta, tb, gain,
+            cars_a, cars_b, emerg, inc, co2
+        ])
 
     content = out.getvalue()
+    filename = f"cityflow_traffic_telemetry_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+
     return Response(
-        content=content,
-        media_type="text/csv",
-        headers={"Content-Disposition": "attachment; filename=cityflow_traffic_metrics.csv"}
+        content=content.encode("utf-8-sig"),
+        media_type="text/csv; charset=utf-8",
+        headers={
+            "Content-Disposition": f'attachment; filename="{filename}"',
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Pragma": "no-cache",
+            "Expires": "0"
+        }
     )
 
 

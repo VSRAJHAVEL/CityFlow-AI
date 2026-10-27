@@ -1368,5 +1368,42 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Clean CSV Export Interceptor with RFC 4180 blob download
+  document.querySelectorAll('a[href="/export/csv"]').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      fetch('/export/csv')
+        .then(res => {
+          if (!res.ok) throw new Error('Export failed: ' + res.status);
+          let filename = 'cityflow_traffic_telemetry.csv';
+          const disp = res.headers.get('content-disposition');
+          if (disp && disp.indexOf('filename=') !== -1) {
+            const matches = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(disp);
+            if (matches && matches[1]) {
+              filename = matches[1].replace(/['"]/g, '');
+            }
+          }
+          return res.blob().then(blob => ({ blob, filename }));
+        })
+        .then(({ blob, filename }) => {
+          const blobUrl = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.style.display = 'none';
+          a.href = blobUrl;
+          a.download = filename;
+          document.body.appendChild(a);
+          a.click();
+          setTimeout(() => {
+            window.URL.revokeObjectURL(blobUrl);
+            document.body.removeChild(a);
+          }, 400);
+        })
+        .catch(err => {
+          console.warn('Fallback download:', err);
+          window.location.href = '/export/csv';
+        });
+    });
+  });
+
   requestAnimationFrame(render);
 });
