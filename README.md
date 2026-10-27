@@ -50,6 +50,17 @@ uvicorn main:app --reload
 
 ---
 
+## 🌐 1-Click Cloud Deployment (Free Tier)
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/VSRAJHAVEL/CityFlow-AI)
+
+CityFlow AI is fully configured for instant, zero-cost cloud deployment:
+1. Click the **[Deploy to Render](https://render.com/deploy?repo=https://github.com/VSRAJHAVEL/CityFlow-AI)** button above.
+2. Log in with your GitHub account (**VSRAJHAVEL**).
+3. Click **Apply Blueprint** — Render will automatically read [`render.yaml`](render.yaml), install dependencies, and launch your live public simulation web service in ~60 seconds!
+
+---
+
 ## 📁 Repository Structure
 
 ```
