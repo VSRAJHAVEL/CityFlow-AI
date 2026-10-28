@@ -10,6 +10,7 @@ license: mit
 
 # CityFlow AI: Multi-Agent Autonomous Urban Mobility Platform
 
+[![GitHub Pages](https://img.shields.io/badge/%F0%9F%8C%90%20GitHub%20Pages-Live%20Demo-2ea44f?style=for-the-badge&logo=github)](https://vsrajhavel.github.io/CityFlow-AI/)
 [![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Live%20Demo-Hugging%20Face%20Spaces-yellow?style=for-the-badge&logo=huggingface)](https://huggingface.co/spaces/VSRAJHAVEL/CityFlow-AI)
 [![Deploy to Render](https://img.shields.io/badge/Deploy%20to-Render-46E3B7?style=for-the-badge&logo=render)](https://render.com/deploy?repo=https://github.com/VSRAJHAVEL/CityFlow-AI)
 
